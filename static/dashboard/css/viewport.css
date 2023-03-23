@@ -1,0 +1,204 @@
+@media (min-width : 320px) and (max-width: 480px) {
+.main-panel{padding-left:0;} 
+.navbar .navbar-brand-wrapper {width: 75px;}
+.accounthistory_top .form-group, .accounthistory_top .d-inline-block {width: 100%;}
+.accounthistory_top .col-lg-12.d-flex.flex-nowrap{display:inline-block !important;}
+.accounthistory_top .form-group{ margin-bottom: 15px !important;}  
+.pagination, .accounthistory_top .d-inline-block {margin-top:15px !important;}
+.navbar .navbar-menu-wrapper{ box-shadow: none !important;} 
+.f_22 {font-size: 19px !important;}
+.total_points_sec .col.col_full{display: inline-block;width: 100%;flex-basis: auto;}
+.navbar .navbar-brand-wrapper .navbar-brand{padding-left:28px;}
+.waiting_approval img{width:100%;}
+.point_top .align-self-end.text-right{width:100%;}
+.w-60{width:auto !important}
+.numbr_tranfer_points .d-flex.flex-nowrap{-ms-flex-wrap: wrap !important;flex-wrap: wrap !important;}
+.numbr_tranfer_points .d-flex.flex-nowrap .form-check{margin-right:0 !important; width:100%}
+.confirm_btn_box a{width:100%; margin:4px 0 !important}
+.accordion .card-header a h5{font-size:16px}
+#carouselExampleIndicators{margin-bottom:40px}
+.modal-content{width:95%; margin: 0 auto;} 
+.storename_popsubject {display: inline-block;width: 100%;text-align: center;} 
+.storeprofile_page .tabwth_topbtn .d-flex.justify-content-end a{position: inherit;margin-bottom: 15px;margin-top: -15px;}
+.auth form .auth-form-btn{padding-left:0; padding-right:0; font-size: 18px; }
+.codeentry_sec .row.mt-3 .col-lg-12{text-align:center;}
+.codeentry_sec .row.mt-3 .col-lg-12 .col-small{width:15%;padding: 0 2px;}
+.page-body-wrapper.full-page-wrapper{min-height: 100%;}   
+.storeprofile_btns2{display:inline-block !important;} 
+.storeprofile_btns2 a{margin-right:0 !important; margin-bottom:10px; width:100%;} 
+.storeprofile_page .nav-tabs .nav-item {width: 50%;text-align: center; margin-bottom:5px;} 
+.storeprofile_page .nav-tabs .nav-link{font-size: 15px; padding: 0.5rem;}
+.verify_number .col-sm-9.col-md-7.col-lg-6.mx-auto{padding:0;}
+.arrow_back{left: 1rem;}
+.arrow_back_inner{left:0;} 
+.btn_textmore{padding-left:0; padding-right:0; width:100%; }    
+.f_16 {font-size: 15px !important;}
+.auth .brand-logo {margin-bottom: 2.5rem;}
+.auth-form-light .col-lg-12 h6{font-size: 16px;line-height: 24px;}
+.auth-form-light .col-lg-12{padding-left:0; padding-right:0;} 
+.refresh_{padding-top: 5px !important;text-align: right;}
+}
+@media (min-width: 320px) and (max-width: 575px) {
+.new_reg_imageupload{margin:4px 5px 4px 0}
+}
+@media (min-width: 480px) and (max-width: 599px) {
+.main-panel {padding-left: 0;}
+#carouselExampleIndicators{margin-bottom:40px}
+.btn_textmore{width:80%;}    
+}
+@media (min-width: 600px) and (max-width: 767px) {
+#carouselExampleIndicators{margin-bottom:40px}
+.main-panel{padding-left:0;} 
+.navbar .navbar-brand-wrapper {width: 75px;}
+.accounthistory_top .form-group, .accounthistory_top .d-inline-block {width: 100%;}
+.accounthistory_top .col-lg-12.d-flex.flex-nowrap{display:inline-block !important;}
+.accounthistory_top .form-group{ margin-bottom: 15px !important;}  
+.pagination, .accounthistory_top .d-inline-block {margin-top:15px !important;}
+.navbar .navbar-menu-wrapper{ box-shadow: none !important;}
+.f_22 {font-size: 19px !important;}
+.total_points_sec .col.col_full{display: inline-block;width: 100%;flex-basis: auto;}
+.navbar .navbar-brand-wrapper .navbar-brand{padding-left:28px;}
+.auth .btn.btn-block.btn-gradient-primary.btn-lg.font-weight-bold.f_22{width:65%; margin:0 auto;}   
+.storeprofile_page .tabwth_topbtn .d-flex.justify-content-end a{position: inherit;margin-bottom: 15px;margin-top: -15px;}
+.auth form .auth-form-btn{padding-left:0; padding-right:0; font-size: 19px; } 
+.codeentry_sec .row.mt-3 .col-lg-12{text-align:center;}
+ .codeentry_sec .row.mt-3 .col-lg-12 .col-small{width:15%;padding: 0 2px;} 
+.refresh_{padding-top: 5px !important;text-align: right;}	
+}
+@media (max-width: 767px) { 
+.navbar .navbar-menu-wrapper { width: calc(100% - 75px);}
+.sidebar .nav{margin-top:0}
+.navbar .navbar-brand-wrapper {width: 75px;}
+.navbar .navbar-brand-wrapper .navbar-brand {padding-left: 28px;}
+}
+@media (min-width: 768px) {
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+	body{font-size:14px}
+.main-panel{padding-left:0;} 
+/*.navbar .navbar-brand-wrapper {width: 75px;}*/
+.accounthistory_top .form-group{width: 28%; display: inline-block;} 
+.accounthistory_top .d-inline-block {width:auto;}
+.accounthistory_top .col-lg-12.d-flex.flex-nowrap{display:inline-block !important;}
+.accounthistory_top .form-group{ margin-bottom: 15px !important;}  
+.pagination{margin-top:10px !important;} 
+.accounthistory_top .d-inline-block {margin-top:15px !important;}
+.navbar .navbar-menu-wrapper{ box-shadow: none !important;}
+.f_22 {font-size: 19px !important;}
+.total_points_sec .col.col_full{display: inline-block;width: 100%;flex-basis: auto;}
+.navbar .navbar-brand-wrapper .navbar-brand{padding-left:28px;}
+.tablebtm_select .col-sm-3.col-form-label {flex: initial;max-width: inherit;width: auto;}
+.auth .btn.btn-block.btn-gradient-primary.btn-lg.font-weight-bold.f_22{width:50%; margin:0 auto;}
+.point_top .align-self-end.text-right{width:100%;}   
+.navbar .navbar-menu-wrapper {width: calc(100% - 240px);} 
+.navbar-nav.navbar-nav-right{margin-left:auto}
+.sidebar .nav{margin-top:0}
+.waiting_approval img{max-width:250px}
+.main-panel {padding-left: 0;}
+#carouselExampleIndicators{margin-bottom:60px}
+.storeprofile_page .tabwth_topbtn .d-flex.justify-content-end a{top:7px;} 
+.auth form .auth-form-btn{padding-left:0; padding-right:0; font-size: 19px; }
+.point_top{min-height:120px;} 
+.refresh_{display:inline-block;}	
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
+.total_points_sec .col.col_full{display: inline-block;width: 100%;flex-basis: auto;}
+}
+@media (max-width: 991px) {
+}
+@media (min-width: 992px) {
+}
+@media only screen and (min-width:992px) and (max-width:1100px) {
+body{font-size:0.8rem}
+h6, .h6 {font-size: 0.8rem;}
+.total_points_sec .col.col_full{display: inline-block;width: 100%;flex-basis: auto;}
+.tablebtm_select .col-sm-3.col-form-label {flex: initial;max-width: inherit;width: auto;}
+.tablebtm_select .col-sm-6.col-md-7.col-lg-5{-ms-flex: 0 0 55%;flex: 0 0 55%;max-width: 55%;}
+.accounthistory_top .form-group{width: 28%; display: inline-block;} 
+.accounthistory_top .d-inline-block {width:auto;margin-top: 0px !important;}
+.accounthistory_top .col-lg-12.d-flex.flex-nowrap{display:inline-block !important;}
+.accounthistory_top .form-group{ margin-bottom: 15px !important;}  
+.point_top .align-self-end.text-right{width:100%;}  
+.sub_title{font-size:14px}   
+.holiday_sec .mr-4{margin-right:13px !important} 
+.accordion .card-header a h5{font-size:16px}
+.form-control{ font-size: 12px !important;}
+.storeprofile_page .tabwth_topbtn .d-flex.justify-content-end a{top:7px;}
+.auth form .auth-form-btn{padding-left:0; padding-right:0; font-size: 19px; }
+.auth-form-light .col-sm-9.col-md-7.col-lg-6{-ms-flex: 0 0 75%;flex: 0 0 75%;max-width: 75%;}
+.f_22 {font-size: 19px !important;} 
+.point_top{min-height:120px;} 
+.refresh_{display:inline-block;}	
+}
+@media only screen and (min-width:1101px) and (max-width:1199px) {
+.accounthistory_top .form-group{width: 30%; display: inline-block;} 
+.sub_title{font-size:14px}   	
+}
+@media (min-width: 1200px) {
+}
+@media (min-width: 1200px) and (max-width: 1280px) {
+.navbar .navbar-brand-wrapper, .sidebar{width:220px;}
+.navbar .navbar-menu-wrapper{width: calc(100% - 220px);}
+.main-panel{padding-left:220px;}
+.accounthistory_top .form-group{/*margin-right: 0.5rem !important;*/width: 16%;}
+.point_month{margin-right: 0.8rem !important;} 
+.point_month, .point_display{font-size:13px; margin-top:-4px !important;padding-left:10px;}    
+.point_month span, .point_display span{display:inline-block; width:100%; padding-top:15px; display: -webkit-box !important;
+display: -ms-flexbox !important;
+display: flex !important;}  
+.f_22 {font-size: 19px !important;}    
+.codeentry_sec .col{padding-right: 8px;padding-left: 8px;}  
+.holiday_sec .mr-4{margin-right:13px !important}
+.checkcustom.form-check.mr-4{margin-right: 1rem !important;}
+.accounthistory_top .monthfield,.accounthistory_top .datefield{width:21%;}
+.accounthistory_top .pointtypefiled{width:20%;}
+.col-small{    width: 15.5%;}
+.reward_regional{padding-left:70px;}    
+}
+@media (min-width: 1300px) and (max-width: 1366px) {
+.navbar .navbar-brand-wrapper, .sidebar{width:220px;}
+.navbar .navbar-menu-wrapper{width: calc(100% - 220px);}
+.main-panel{padding-left:220px;}
+.accounthistory_top .form-group{/*margin-right: 0.5rem !important;*/ width: 16%;}
+.point_month{margin-right: 0.8rem !important;} 
+.point_month, .point_display{font-size:13px; margin-top:-4px !important;padding-left:10px;}    
+.point_month span, .point_display span{display:inline-block; width:100%; padding-top:15px; display: -webkit-box !important;
+display: -ms-flexbox !important;
+display: flex !important;}   
+.f_22 {font-size: 20px !important;} 
+.codeentry_sec .col{padding-right: 8px;padding-left: 8px;}    
+.checkcustom.form-check.mr-4{margin-right: 1.2rem !important;}
+.accounthistory_top .monthfield,.accounthistory_top .datefield{width:20%;}
+.accounthistory_top .pointtypefiled{width:17%;} 
+.col-small{    width: 15.5%;}
+.reward_regional{padding-left:70px;}      
+}
+@media (min-width: 1368px) and (max-width: 1450px) {
+.navbar .navbar-brand-wrapper, .sidebar{width:220px;}
+.navbar .navbar-menu-wrapper{width: calc(100% - 220px);}
+.main-panel{padding-left:220px;}
+.accounthistory_top .form-group{/*margin-right: 0.5rem !important;*/width: 15%;}
+.point_month{margin-right: 0.8rem !important;} 
+.point_month, .point_display{font-size:13px;} 
+.f_22 {font-size: 20px !important;}  
+.codeentry_sec .col{padding-right: 10px;padding-left: 10px;} 
+.accounthistory_top .monthfield,.accounthistory_top .datefield{width:18%;}
+.accounthistory_top .pointtypefiled{width:16%;}
+.point_month span, .point_display span{padding-left:10px;}     
+.reward_regional{padding-left:70px;}    
+}
+@media (min-width: 1600px) and (max-width: 1680px) { 
+.point_month span, .point_display span{padding-left:10px;} 
+.reward_regional{padding-left:70px;}    
+}
+@media (min-width: 1900px) and (max-width: 1920px) {
+/*.navbar .navbar-brand-wrapper, .sidebar, .fixed-top{width:260px;}*/
+.navbar .navbar-menu-wrapper{width: calc(100% - 260px);}
+.main-panel{padding-left:260px;}
+.accounthistory_top .form-group, .point_month, .point_display  {width: 19%;}
+.point_month, .point_display{text-align:right;}
+.point_month{margin-right:0 !important;}
+.round_logo{padding-right:15px;} 
+.point_month span, .point_display span{padding-left:10px;}
+.reward_regional{padding-left:70px;}    
+}

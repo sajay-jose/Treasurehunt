@@ -1,0 +1,71 @@
+{% extends 'coordinator-dashboard/app.html' %}
+
+{% block content %}
+  <div class="center">
+    <form method="post" action="game_create">
+      {% csrf_token %}
+      <label for="game_name">Game Name:</label>
+      <input type="text" id="game_name" name="game_name"><br><br>
+
+      <label for="game_id">Game ID:</label>
+      <input type="text" id="game_id" name="game_id"><br><br>
+
+      <label for="clues">Clues:</label>
+      <input type="text" id="clues" name="clues"><br><br>
+
+      <label for="game_level">Game Level:</label>
+        <select name="game_level" id="game_level">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select><br><br>
+
+      <label for="start_date">Start Date:</label>
+      <input type="date" id="start_date" name="start_date"><br><br>
+
+      <label for="end_date">End Date:</label>
+      <input type="date" id="end_date" name="end_date"><br><br>
+
+      <label for="rules">Rules:</label>
+      <input type="text" id="rules" name="rules"><br><br>
+
+      <button type="submit">Create Game</button>
+    </form>
+  </div>
+<style>
+    .center {
+  margin: auto;
+  width: 50%;
+  padding: 80px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+
+}
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+
+</style>
+{% endblock %}

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <title>Treasurehunt.</title>
+    <link href="{% static 'dashboard/css/vendor.bundle.base.css' %}" rel="stylesheet">
+    <link href="{% static 'dashboard/fonts/noto-sans/stylesheet.css' %}" rel="stylesheet">
+    <link href="{% static 'dashboard/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'dashboard/css/viewport.css'%}" rel="stylesheet">
+    <link href="{% static 'dashboard/css/sweetalert-1.1.3.min.css' %}" rel="stylesheet">
+    <link href="{% static 'dashboard/css/toastr.css' %}" rel="stylesheet">
+    <!-- Layout styles -->
+    <link  href="{% static 'dashboard/font/noto-sans/stylesheet.css" rel="stylesheet">
+    <link  href="{% static 'dashboard/css/select2.min.css' %}" rel="stylesheet">
+    <!-- End layout styles -->
+    <link  href="{% static 'image/favicon.png' %}" rel="shortcut icon">
+    <link  href="{% static 'dashboard/css/font-awesome/font-awesome.min.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- partial:partials/_sidebar.html -->
+    <!-- Pre Loader Strat -->
+    <div class='loadscreen' id="preloader">
+        <div class="loader spinner-bubble spinner-bubble-primary">
+        </div>
+    </div>
+    <div class="container-scroller">
+        <header class="">
+            <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+              <div class="navbar-menu-wrapper d-flex align-items-stretch">
+                    <a class="navbar-brand brand-logo" href="#"><img src="{% static 'image/logo.png' %}" alt="logo" class="ml-2 logo-img">Treasurehunt</a>
+                    <ul class="navbar-nav navbar-nav-right">
+
+                      <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="avatar_login"><img alt="" src="{% static 'image/avatar1_small.png' %}"></span>
+                          <span class="username text-muted">Admin</span>
+                          <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu extended logout dropdown-menu-right">
+                          <div class="log-arrow-up"></div>
+
+                          <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="18.163" height="18" viewBox="0 0 18.163 18">
+                                <g id="edit" transform="translate(-1 -0.879)">
+                                  <path id="Path_343" data-name="Path 343" d="M9.157,4H3.59A1.59,1.59,0,0,0,2,5.59V16.723a1.59,1.59,0,0,0,1.59,1.59H14.723a1.59,1.59,0,0,0,1.59-1.59V11.157" transform="translate(0 -0.434)" fill="none" stroke="#013358" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                  <path id="Path_344" data-name="Path 344" d="M16.349,2.373a1.687,1.687,0,0,1,2.386,2.386l-7.554,7.554L8,13.108l.8-3.181Z" transform="translate(-1.229)" fill="none" stroke="#013358" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                </g>
+                              </svg>
+                              Edit Profile</a>
+                          </li>
+
+                          <!--<li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>-->
+                          <li><a href="password"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="17.219" viewBox="0 0 18 17.219">
+                                <g id="edit-3" transform="translate(-2 -1.879)">
+                                  <path id="Path_345" data-name="Path 345" d="M12,20h8" transform="translate(-1 -1.902)" fill="none" stroke="#013358" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                  <path id="Path_346" data-name="Path 346" d="M15,3.431A1.886,1.886,0,1,1,17.667,6.1L6.556,17.209,3,18.1l.889-3.556Z" fill="none" stroke="#013358" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                </g>
+                              </svg>
+                              Change Password</a>
+                          </li>
+
+                          <!--<li><a href="#"><i class="fa fa-bell-o"></i> Notifications</a></li> -->
+                          <li><a href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                <g id="log-out" transform="translate(-2 -2)">
+                                  <path id="Path_347" data-name="Path 347" d="M7.667,17H4.556A1.556,1.556,0,0,1,3,15.444V4.556A1.556,1.556,0,0,1,4.556,3H7.667" transform="translate(0 0)" fill="none" stroke="#013358" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                  <path id="Path_348" data-name="Path 348" d="M16,14.778l3.889-3.889L16,7" transform="translate(-2.889 -0.889)" fill="none" stroke="#013358" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                  <line id="Line_10" data-name="Line 10" x1="9" transform="translate(8 10)" fill="none" stroke="#013358" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></line>
+                                </g>
+                              </svg>
+                              Log Out</a>
+
+                            <form id="logout-form" action="#" method="POST" style="display: none;">
+                              <input type="hidden" name="_token" value="25nuJgQQetAe2qt8HvQMYJ36JQlRPDkBy9N7zemZ">
+                            </form>
+                          </li>
+                        </ul>
+                      </li>
+
+                       <li class="nav-item d-lg-block full-screen-link"> <a class="nav-link"> <i class="mdi mdi-fullscreen" id="fullscreen-button"></i> </a></li>
+                    </ul>
+              </div>
+            </nav>
+        </header>
+        {% block content %}
+        <div class="container-fluid page-body-wrapper">
+                <div class="content-wrapper content-wrapper-inner">
+                    <div class="shop_area release-container">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page_title">
+                                        <h2>Dashboard</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 grid-margin stretch-card">
+                                    <div class="card pointbox">
+                                        <div class="card-body p-0">
+                                            <div class="total_points_sec">
+                                                <div class="point_top">
+                                                    <div class="row">
+                                                        <div class="flex-grow-1 col_full">
+                                                            <div class="points_top d-flex flex-nowrap">
+                                                                <div class="p_style"> <span class="blinkround_sec">
+                                                                        <div class="blinkround" href="">
+                                                                            <span>U</span>
+                                                                        </div>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="point_cont text_semi_color">Total number of
+                                                                    users
+                                                                    <span class="d-inline-block w-100"> 9</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="point_bottom">
+                                                    <div class="row reward_regional">
+                                                        <div class="col">
+                                                            <div class="reward_point text_semi_color">Company users<span
+                                                                    class="d-inline-block w-100 text-dark">
+                                                                    3 </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="regional_point text_semi_color"> Players<span
+                                                                    class="d-inline-block w-100 text-dark">
+                                                                    6 </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 grid-margin stretch-card">
+                                    <div class="card pointbox">
+                                        <div class="card-body p-0">
+                                            <div class="total_points_sec">
+                                                <div class="point_top">
+                                                    <div class="row">
+                                                        <div class="flex-grow-1 col_full">
+                                                            <div class="points_top d-flex flex-nowrap">
+                                                                <div class="p_style"> <span class="blinkround_sec">
+                                                                        <div class="blinkround blueblinkround" href="">
+                                                                            <span>C</span>
+                                                                        </div>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="point_cont text_semi_color">Total number of
+                                                                    cases<span class="d-inline-block w-100 "> 32 </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="point_bottom">
+                                                    <div class="row reward_regional">
+                                                        <div class="col">
+                                                            <div class="reward_point text_semi_color">Approved<span
+                                                                    class="d-inline-block w-100 text-dark">
+                                                                    1 </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="regional_point text_semi_color">Closed<span
+                                                                    class="d-inline-block w-100 text-dark">
+                                                                    0 </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h2>Welcome, {{ user.username }}!</h2>
+                                <p>Game Information:</p>
+                                <ul>
+                                    <li><a href="game_details">View game details</a></li>
+                                </ul>
+                                <p>Scoreboard:</p>
+                                <ul>
+                                    <li><a href="scoreboard">View scoreboard</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+            <footer class="footer">
+                <div class="container-fluid clearfix"><span
+                        class="text-muted d-block text-center text-sm-left d-sm-inline-block"> © {% now "Y" %} Treasurehunt. All Rights Reserved.</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <style>
+        .logo-img {
+            height: 60px;
+            width: auto;
+        }
+        .navbar .navbar-menu-wrapper {
+        width: calc(100% ) !important;
+        }
+    </style>
+    <script src="{% static 'dashboard/js/vendor.bundle.base.js' %}"></script>
+    <script src="{% static 'dashboard/js/off-canvas.js' %}"></script>
+    <script src="{% static 'dashboard/js/hoverable-collapse.js' %}"></script>
+    <script src="{% static 'dashboard/js/misc.js' %}"></script>
+    <script src="{% static 'dashboard/js/toastr.js' %}"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="{% static 'dashboard/js/select2.min.js' %}"></script>
+    <!-- DataTables -->
+    <script src="{% static 'dashboard/js/sweetalert-1.1.3.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/dataTables.responsive.min.js' %}"></script>
+    <script
+        src="{% static 'dashboard/js/jquery-1.16.0.validate.min.js' %}"></script>
+    <script
+        src="{% static 'dashboard/js/additional-methods-1.16.0.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/common-scripts.js' %}"></script>
+</body>
+</html>

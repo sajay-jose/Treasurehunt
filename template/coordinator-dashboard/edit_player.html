@@ -1,0 +1,28 @@
+{% extends 'coordinator-dashboard/app.html' %}
+
+{% block content %}
+<div class="center">
+    <div>
+        <form method="POST" action="edit_player">
+            {% csrf_token %}
+            <input type="hidden" id="uid" name="uid" value="{{ uid }}">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="{{ player.name }}"><br>
+            <label for="email">email:</label>
+            <input type="text" id="email" name="email" value="{{ player.email }}"><br>
+            <label for="phone">Email:</label>
+            <input type="phone" id="phone" name="phone" value="{{ player.phone }}"><br>
+            <button type="submit">Save</button>
+        </form>
+
+    </div>
+</div>
+<style>
+    .center {
+  margin: auto;
+  width: 50%;
+  padding: 40px;
+}
+</style>
+
+{% endblock %}

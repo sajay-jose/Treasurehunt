@@ -1,0 +1,14 @@
+
+{% extends "login.html" %}
+
+{% block script %}
+    <script>
+
+        document.getElementById('reg_success').style.display = 'block';
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('register').style.display = 'none';
+        document.getElementById('forgot').style.display = 'none';
+        document.getElementById('reset_email_sent').style.display = 'none';
+
+    </script>
+{% endblock %}

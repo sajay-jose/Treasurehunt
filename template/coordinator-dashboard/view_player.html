@@ -1,0 +1,30 @@
+{% extends 'coordinator-dashboard/app.html' %}
+
+{% block content %}
+<div class="center">
+  <h1>Player Details</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phone }}</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+<style>
+    .center {
+  margin: auto;
+  width: 50%;
+  padding: 40px;
+}
+</style>
+{% endblock %}

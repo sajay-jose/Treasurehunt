@@ -1,0 +1,36 @@
+{% extends 'coordinator-dashboard/app.html' %}
+
+{% block content %}
+<div class="center">
+  <h1>Game Details</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Rules</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in game %}
+        <tr>
+          <td>{{ i.game_id }}</td>
+          <td>{{ i.game_name }}</td>
+          <td>{{ i.start_date }}</td>
+          <td>{{ i.end_date }}</td>
+          <td>{{ i.rules }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<style>
+    .center {
+  margin: auto;
+  width: 50%;
+  padding: 40px;
+}
+</style>
+{% endblock %}

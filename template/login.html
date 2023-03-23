@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/select2.min.js' %}"></script>
+    <script src="{% static 'js/common_js.js' %}"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="shortcut icon" href="{% static 'image/logo.png' %}"/>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/select2.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/viewport.css' %}" rel="stylesheet">
+    <title>Treasurehunt.</title>
+</head>
+<body>
+<header class="header_desktop">
+    <div class="main_header">
+        <nav class="navbar navbar-expand-xl">
+            <div class="container"><a class="navbar-brand me-0 " href="#"> <img
+                    src="{% static 'image/logo.png' %}" alt="logo" class="logo-img">Treasurehunt</a>
+                {% block nav %}
+                <div class="cart_sec">
+                    <ul class="d-flex ul_reset">
+                        <li>
+                            <button class="btn btn-primary me-3"
+                                    onclick="ShowAndHideStuff('login', 'register','forgot')">Login
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-primary-border"
+                                    onclick="ShowAndHideStuff('register', 'login','forgot')">Register
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+{% endblock %}
+<section class="banner_section">
+    <div class="banner_caption">
+        <div class="container">
+            <div class="row ">
+                <div class="col-md-7 banner_left">
+                    <div class="banner_content">
+                        <h1>Adventure. Discovery. <span>Triumph.</span></h1>
+                        <h6>Get ready to embark on a thrilling treasure hunt journey, filled with adventure, mystery, and excitement.</h6>
+                        <p>As you navigate through the twists and turns of our treasure hunt, be sure to
+                            keep a sharp eye out for hidden clues and riddles that will lead you to the next challenge. </p>
+                    </div>
+                </div>
+                {% block content %}
+                <div class="col-md-5 banner_right">
+
+                    <div class="white_box banner_forms" id="login">
+                        <h3>Login</h3>
+                        <form method="POST" action="/login">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <input class="form-control  " id="login-email" placeholder="Email" type="email"
+                                       name="email" value="" required autofocus>
+                                <p class="error login-email-error"></p>
+                            </div>
+                            <div class="mb-3 password">
+                                <input class="form-control" id="login-password" placeholder="Password" type="password"
+                                       name="password" required autocomplete="current-password">
+                                <span class="fa fa-eye-slash" id="togglePassword"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-eye" viewBox="0 0 16 16">
+                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                  </svg>
+                </span>
+
+                                <p class="error login-password-error"></p>
+                            </div>
+                            <div class="mb-3 text-end">
+                                <a href="#" onclick="ShowAndHideStuff('forgot', 'login','register')"
+                                   class="forgot_link">Forgot Password?</a>
+                            </div>
+
+                            <button type="submit" id="login_submit" class="btn btn-secondary d-block w-100 mt-2">
+                                Submit
+                            </button>
+                            <div class="text-center not_yet_sec">
+                                Not a user yet? <a href="#"
+                                                   onclick="ShowAndHideStuff('register', 'login','forgot')">Register</a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="white_box banner_forms" id="forgot">
+                        <h3>Forgot Password</h3>
+                        <form method="POST"
+                              action="password_reset">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <input class="form-control" id="forget-email" placeholder="Email" type="email"
+                                       name="email" :value="old('email')" required autofocus>
+                                <p class="error forget-email-error"></p>
+                            </div>
+
+                            <button type="submit" id="forget_submit" class="btn btn-secondary d-block w-100 mt-2">
+                                Submit
+                            </button>
+                            <div class="text-center not_yet_sec">
+                                Not a user yet? <a href="#"
+                                                   onclick="ShowAndHideStuff('register', 'login','forgot')">Register</a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="white_box banner_forms" id="register">
+                        <h3>Register</h3>
+                        <form method="POST" action="/register">
+                        {% csrf_token %}
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="reg-name" placeholder="Name" name="name"
+                                       required autocomplete="name" autofocus>
+                                <p class="error find-name-error"></p>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="reg-email" placeholder="Email" name="email"
+                                       required autocomplete="email" autofocus>
+                                <p class="error find-email-error"></p>
+                            </div>
+                            <div class="mb-3 row g-3 align-items-center">
+                                <div class="col-auto flex-fill">
+                                    <label class="col-form-label">Register as</label>
+                                </div>
+                                <div class="col-auto flex-fill">
+                                    <label class="radio_container">Coordinator
+                                        <input type="radio" value="1" name="register_as" checked="checked">
+                                        <span class="radiomark"></span> </label>
+                                </div>
+                                <div class="col-auto flex-fill">
+                                    <label class="radio_container">Player
+                                        <input type="radio" value="2" name="register_as">
+                                        <span class="radiomark"></span> </label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="game_name" placeholder="Game Name"
+                                       name="game_name" required autofocus>
+                                <p class="error reg-game_name-error"></p>
+                            </div>
+
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="game_id" placeholder="Game ID"
+                                       name="game_id" required autofocus>
+                                <p class="error reg-game_id-error"></p>
+                            </div>
+                            <div class="mb-3 row g-2 align-items-center">
+                                <div class="col-md-3 col-auto flex-fill">
+                                    <select class="form-control" id="phonecode" name="phonecode" required>
+                                        <option value=""></option>
+                                        <option selected value="+0">+0</option>
+                                        <option value="+1">+1</option>
+                                        <option value="+1242">+1242</option>
+                                        <option value="+1246">+1246</option>
+                                        <option value="+1264">+1264</option>
+                                        <option value="+1268">+1268</option>
+                                        <option value="+1284">+1284</option>
+                                        <option value="+1340">+1340</option>
+                                        <option value="+1345">+1345</option>
+                                        <option value="+1441">+1441</option>
+                                        <option value="+1473">+1473</option>
+                                        <option value="+1649">+1649</option>
+                                        <option value="+1664">+1664</option>
+                                        <option value="+1670">+1670</option>
+                                        <option value="+1671">+1671</option>
+                                        <option value="+1684">+1684</option>
+                                        <option value="+1758">+1758</option>
+                                        <option value="+1767">+1767</option>
+                                        <option value="+1784">+1784</option>
+                                        <option value="+1787">+1787</option>
+                                        <option value="+1809">+1809</option>
+                                        <option value="+1868">+1868</option>
+                                        <option value="+1869">+1869</option>
+                                        <option value="+1876">+1876</option>
+                                        <option value="+20">+20</option>
+                                        <option value="+212">+212</option>
+                                        <option value="+213">+213</option>
+                                        <option value="+216">+216</option>
+                                        <option value="+218">+218</option>
+                                        <option value="+220">+220</option>
+                                        <option value="+221">+221</option>
+                                        <option value="+222">+222</option>
+                                        <option value="+223">+223</option>
+                                        <option value="+224">+224</option>
+                                        <option value="+225">+225</option>
+                                        <option value="+226">+226</option>
+                                        <option value="+227">+227</option>
+                                        <option value="+228">+228</option>
+                                        <option value="+229">+229</option>
+                                        <option value="+230">+230</option>
+                                        <option value="+231">+231</option>
+                                        <option value="+232">+232</option>
+                                        <option value="+233">+233</option>
+                                        <option value="+234">+234</option>
+                                        <option value="+235">+235</option>
+                                        <option value="+236">+236</option>
+                                        <option value="+237">+237</option>
+                                        <option value="+238">+238</option>
+                                        <option value="+239">+239</option>
+                                        <option value="+240">+240</option>
+                                        <option value="+241">+241</option>
+                                        <option value="+242">+242</option>
+                                        <option value="+244">+244</option>
+                                        <option value="+245">+245</option>
+                                        <option value="+246">+246</option>
+                                        <option value="+248">+248</option>
+                                        <option value="+249">+249</option>
+                                        <option value="+250">+250</option>
+                                        <option value="+251">+251</option>
+                                        <option value="+252">+252</option>
+                                        <option value="+253">+253</option>
+                                        <option value="+254">+254</option>
+                                        <option value="+255">+255</option>
+                                        <option value="+256">+256</option>
+                                        <option value="+257">+257</option>
+                                        <option value="+258">+258</option>
+                                        <option value="+260">+260</option>
+                                        <option value="+261">+261</option>
+                                        <option value="+262">+262</option>
+                                        <option value="+263">+263</option>
+                                        <option value="+264">+264</option>
+                                        <option value="+265">+265</option>
+                                        <option value="+266">+266</option>
+                                        <option value="+267">+267</option>
+                                        <option value="+268">+268</option>
+                                        <option value="+269">+269</option>
+                                        <option value="+27">+27</option>
+                                        <option value="+290">+290</option>
+                                        <option value="+291">+291</option>
+                                        <option value="+297">+297</option>
+                                        <option value="+298">+298</option>
+                                        <option value="+299">+299</option>
+                                        <option value="+30">+30</option>
+                                        <option value="+31">+31</option>
+                                        <option value="+32">+32</option>
+                                        <option value="+33">+33</option>
+                                        <option value="+34">+34</option>
+                                        <option value="+350">+350</option>
+                                        <option value="+351">+351</option>
+                                        <option value="+352">+352</option>
+                                        <option value="+353">+353</option>
+                                        <option value="+354">+354</option>
+                                        <option value="+355">+355</option>
+                                        <option value="+356">+356</option>
+                                        <option value="+357">+357</option>
+                                        <option value="+358">+358</option>
+                                        <option value="+359">+359</option>
+                                        <option value="+36">+36</option>
+                                        <option value="+370">+370</option>
+                                        <option value="+371">+371</option>
+                                        <option value="+372">+372</option>
+                                        <option value="+373">+373</option>
+                                        <option value="+374">+374</option>
+                                        <option value="+375">+375</option>
+                                        <option value="+376">+376</option>
+                                        <option value="+377">+377</option>
+                                        <option value="+378">+378</option>
+                                        <option value="+380">+380</option>
+                                        <option value="+385">+385</option>
+                                        <option value="+386">+386</option>
+                                        <option value="+387">+387</option>
+                                        <option value="+389">+389</option>
+                                        <option value="+39">+39</option>
+                                        <option value="+40">+40</option>
+                                        <option value="+41">+41</option>
+                                        <option value="+420">+420</option>
+                                        <option value="+421">+421</option>
+                                        <option value="+423">+423</option>
+                                        <option value="+43">+43</option>
+                                        <option value="+45">+45</option>
+                                        <option value="+46">+46</option>
+                                        <option value="+47">+47</option>
+                                        <option value="+48">+48</option>
+                                        <option value="+49">+49</option>
+                                        <option value="+500">+500</option>
+                                        <option value="+501">+501</option>
+                                        <option value="+502">+502</option>
+                                        <option value="+503">+503</option>
+                                        <option value="+504">+504</option>
+                                        <option value="+505">+505</option>
+                                        <option value="+506">+506</option>
+                                        <option value="+507">+507</option>
+                                        <option value="+508">+508</option>
+                                        <option value="+509">+509</option>
+                                        <option value="+51">+51</option>
+                                        <option value="+52">+52</option>
+                                        <option value="+53">+53</option>
+                                        <option value="+54">+54</option>
+                                        <option value="+55">+55</option>
+                                        <option value="+56">+56</option>
+                                        <option value="+57">+57</option>
+                                        <option value="+58">+58</option>
+                                        <option value="+590">+590</option>
+                                        <option value="+591">+591</option>
+                                        <option value="+592">+592</option>
+                                        <option value="+593">+593</option>
+                                        <option value="+594">+594</option>
+                                        <option value="+595">+595</option>
+                                        <option value="+596">+596</option>
+                                        <option value="+597">+597</option>
+                                        <option value="+598">+598</option>
+                                        <option value="+60">+60</option>
+                                        <option value="+61">+61</option>
+                                        <option value="+62">+62</option>
+                                        <option value="+63">+63</option>
+                                        <option value="+64">+64</option>
+                                        <option value="+65">+65</option>
+                                        <option value="+66">+66</option>
+                                        <option value="+670">+670</option>
+                                        <option value="+672">+672</option>
+                                        <option value="+673">+673</option>
+                                        <option value="+674">+674</option>
+                                        <option value="+675">+675</option>
+                                        <option value="+676">+676</option>
+                                        <option value="+677">+677</option>
+                                        <option value="+678">+678</option>
+                                        <option value="+679">+679</option>
+                                        <option value="+680">+680</option>
+                                        <option value="+681">+681</option>
+                                        <option value="+682">+682</option>
+                                        <option value="+683">+683</option>
+                                        <option value="+684">+684</option>
+                                        <option value="+686">+686</option>
+                                        <option value="+687">+687</option>
+                                        <option value="+688">+688</option>
+                                        <option value="+689">+689</option>
+                                        <option value="+690">+690</option>
+                                        <option value="+691">+691</option>
+                                        <option value="+692">+692</option>
+                                        <option value="+7">+7</option>
+                                        <option value="+70">+70</option>
+                                        <option value="+7370">+7370</option>
+                                        <option value="+81">+81</option>
+                                        <option value="+82">+82</option>
+                                        <option value="+84">+84</option>
+                                        <option value="+850">+850</option>
+                                        <option value="+852">+852</option>
+                                        <option value="+853">+853</option>
+                                        <option value="+855">+855</option>
+                                        <option value="+856">+856</option>
+                                        <option value="+86">+86</option>
+                                        <option value="+880">+880</option>
+                                        <option value="+886">+886</option>
+                                        <option value="+90">+90</option>
+                                        <option value="+91">+91</option>
+                                        <option value="+92">+92</option>
+                                        <option value="+93">+93</option>
+                                        <option value="+94">+94</option>
+                                        <option value="+95">+95</option>
+                                        <option value="+960">+960</option>
+                                        <option value="+961">+961</option>
+                                        <option value="+962">+962</option>
+                                        <option value="+963">+963</option>
+                                        <option value="+964">+964</option>
+                                        <option value="+965">+965</option>
+                                        <option value="+966">+966</option>
+                                        <option value="+967">+967</option>
+                                        <option value="+968">+968</option>
+                                        <option value="+970">+970</option>
+                                        <option value="+971">+971</option>
+                                        <option value="+972">+972</option>
+                                        <option value="+973">+973</option>
+                                        <option value="+974">+974</option>
+                                        <option value="+975">+975</option>
+                                        <option value="+976">+976</option>
+                                        <option value="+977">+977</option>
+                                        <option value="+98">+98</option>
+                                        <option value="+992">+992</option>
+                                        <option value="+994">+994</option>
+                                        <option value="+995">+995</option>
+                                        <option value="+996">+996</option>
+                                        <option value="+998">+998</option>
+                                    </select>
+                                    <p class="error reg-phonecode-error"></p>
+                                </div>
+                                <div class="col-md-8 col-auto flex-fill mt-0">
+                                    <input type="text" class="form-control" id="reg-phone" placeholder="Phone"
+                                           name="phone" required autofocus>
+                                </div>
+                                <p class="error reg-phone-error"></p>
+                            </div>
+
+                            <div class="mb-3 password">
+                                <input class="form-control" id="reg-password" placeholder="Password" type="password"
+                                       name="password" autocomplete="current-password" required autofocus>
+                                <span class="fa fa-eye-slash" id="reg-togglePassword"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-eye" viewBox="0 0 16 16">
+                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                  </svg>
+                </span>
+                                <p class="error reg-password-error"></p>
+                            </div>
+                            <button type="submit" id="reg_submit" class="btn btn-secondary d-block w-100">Submit
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="white_box banner_forms" id="reg_success">
+                        <h3 style="color: #1284b6; font-size: 1.5rem;">Successfully Registered !!</h3>
+                        <h4 style="color: #1284b6; font-size: 1rem;">To Login, Kindly Wait For Admin Approval!!</h4>
+                    </div>
+
+                    <div class="white_box banner_forms" id="reset_email_sent">
+                        <h3 style="color: #1284b6; font-size: 1.5rem;">A Reset Mail Is Send To Your Email!!</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+<section class="advantage_sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="title_sec">Treasurehunt Advantages<span>Transform Your Life Into An Adventure</span>
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"><a href="#" class="advantage_thumb"> <img
+                    src="{% static 'image/24-7.png' %}"
+                    alt="">
+                <h4>24/7 Assistance</h4>
+            </a>
+            </div>
+            <div class="col-md-4"><a href="#" class="advantage_thumb"> <img
+                    src="{% static 'image/low_cost.jpg' %}"
+                    alt="">
+                <h4>Offers a low-cost form of entertainment.</h4>
+            </a>
+            </div>
+            <div class="col-md-4"><a href="#" class="advantage_thumb"> <img
+                    src="{% static 'image/search_path.png' %}"
+                    alt="">
+                <h4>Experience the thrill of the hunt!</h4>
+            </a>
+            </div>
+            <div class="col-md-4"><a href="#" class="advantage_thumb"> <img
+                    src="{% static 'image/images.png' %}"
+                    alt="">
+                <h4>Create a buzz with our treasure hunt game!</h4>
+            </a>
+            </div>
+            <div class="col-md-4"><a href="#" class="advantage_thumb"> <img
+                    src="{% static 'image/event.jpg' %}"
+                    alt="">
+                <h4>Make your event unforgettable with a personalized treasure hunt game!</h4>
+            </a>
+            </div>
+            <div class="col-md-4"><a href="#" class="advantage_thumb"> <img
+                    src="{% static 'image/map.png' %}"
+                    alt="">
+                <h4>Design, play, and share your treasure hunt game with the world!</h4>
+            </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="counter_area">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-4 col-lg-3">
+                <h2 class="subTitle">"Are you ready to put your treasure hunting skills to the test? Join us now!"</h2>
+            </div>
+            <div class="col-md-8 col-lg-9">
+
+                <div class="row counter-box text-center">
+
+                    <div class="col-4">
+                        <p><span class="counter" data-count="4000">0</span>+</p>
+                        <span class="counter-desc">Assist</span>
+
+                    </div>
+                    <div class="col-4 conter_center">
+                        <p><span class="counter" data-count="100">0</span>+</p>
+                        <span class="counter-desc">Cities</span>
+
+                    </div>
+                    <div class="col-4">
+                        <p><span class="counter" data-count="40">0</span>+</p>
+                        <span class="counter-desc">Countries</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="#" class="footer_logo"><img src="{% static 'image/logo.png' %}" class="mw-100 logo-img" alt="">Treasurehunt</a>
+                </div>
+            </div>
+            <div class="row foot_flex justify-content-between">
+                <div class="col-md-6">
+                    <p>"Welcome to ClueCrusaders, the ultimate destination for treasure hunting enthusiasts! Join us on
+                        an exciting journey as we lead you through a maze of clues and puzzles in the hunt for valuable
+                        treasures. Whether you're a seasoned pro or a first-time player, ClueCrusaders offers a fun and
+                        challenging experience for all. So grab your compass, sharpen your wits, and let's begin the hunt!"</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>Address</h4>
+
+                    <h6>India</h6>
+                    <address>Treasurehunt, <br>
+                        kadavanthara, Kochi, Kerala,<br>
+                        India, PIN -682033
+                    </address>
+
+                </div>
+                <div class="col-md-3">
+                    <h4>Contact Us</h4>
+                    <h6>Call Us</h6>
+                    <a href="tel:+917559831171">+917559831171</a>
+                    <h6>Mail Us</h6>
+                    <a href="mailto:sajayjose24@gmail.com">sajayjose24@gmail.com</a>
+                    <h6>Our Network</h6>
+                    <div class="social_media d-flex">
+                        <a href="http://www.facebook.com" target="_blank"><img src="dist/images/fb.png" alt=""></a>
+                        <a href="http://www.twitter.com" target="_blank"><img src="dist/images/twit.png" alt=""></a>
+                        <a href="http://www.instagram.com" target="_blank"><img src="dist/images/insta.png" alt=""></a>
+                        <a href="http://www.linkedin.com" target="_blank"><img src="dist/images/in.png" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="align-self-center m-0">© {% now "Y" %} Treasurehunt. All Rights Reserved.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="oldselectedhospital" value="">
+</footer>
+<script>
+  $('#togglePassword').on("click", function() {
+    var type = $("#login-password").attr('type') === 'password' ? 'text' : 'password';
+    $("#login-password").attr('type', type);
+    $("#togglePassword").empty();
+    if(type=='text'){
+      $("#togglePassword").append('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16"> <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/> <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/> <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/> </svg>');
+    }else{
+      $("#togglePassword").append('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"> <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/> <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>');
+    }
+  });
+  $('#reg-togglePassword').on("click", function() {
+    var type = $("#reg-password").attr('type') === 'password' ? 'text' : 'password';
+    $("#reg-password").attr('type', type);
+    $("#reg-togglePassword").empty();
+    if(type=='text'){
+      $("#reg-togglePassword").append('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16"> <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/> <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/> <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/> </svg>');
+    }else{
+      $("#reg-togglePassword").append('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"> <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/> <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>');
+    }
+  });
+
+</script>
+<style>
+  .password span {
+    float: right;
+    margin-right: 13px !important;
+    margin-top: -38px;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+  }
+  .logo-img {
+    height: 50px;
+    width: auto;
+}
+
+</style>
+<script>
+
+  $(document).ready(function (e) {
+    $("#hospital").prop('disabled', true);
+    $('#find_submit').attr("disabled", true);
+    $('#forget_submit').attr("disabled", true);
+    $('#reg_submit').attr("disabled", true);
+    $('#login_submit').attr("disabled", true);
+
+    //Register
+    $("input[name=register_as]").on('change',(function () {
+        var type = $(this).val();
+        $("#coordinator_error").attr("style", "display: none !important");
+        type == 2 ? $("#game_name").attr("style", "display: none !important").removeAttr('required') : $("#game_name").attr("style", "display: block !important").prop("required", true);
+        type != 2 ? $("#game_id").attr("style", "display: none !important").removeAttr('required') : $("#game_id").attr("style", "display: block !important").prop("required", true);
+
+    }));
+
+    //find
+    $("#find-name").on("blur", function() {
+        $("p.find-name-error").empty();
+        $('#find_submit').removeAttr("disabled");
+        if ($(this).val() !="" && (!$(this).val().match('^[a-zA-Z .\']{3,50}$') ||  $(this).val().match('^[ ]*$'))) {
+          $("p.find-name-error").append("That's not a name.");
+          $('#find_submit').attr("disabled", true);
+        }
+    });
+
+    $("#find-phone").on("blur", function() {
+          $("p.find-phone-error").empty();
+        $('#find_submit').removeAttr("disabled");
+        if ($(this).val() !="" && !$(this).val().match('^[0-9]{4,12}$') ) {
+          $("p.find-phone-error").append("That's not a phone number.");
+          $('#find_submit').attr("disabled", true);
+        }
+    });
+
+    $("#find-email").on("blur", function() {
+          $("p.find-email-error").empty();
+        $('#find_submit').removeAttr("disabled");
+        if ($(this).val() !="" && !$(this).val().match('^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$') ) {
+          $("p.find-email-error").append("That's not a valid email.");
+          $('#find_submit').attr("disabled", true);
+        }
+    });
+
+    // reg
+    $("#reg-name").on("blur", function() {
+          $("p.reg-name-error").empty();
+        $('#reg_submit').removeAttr("disabled");
+        if ( $(this).val() !="" && (!$(this).val().match('^[a-zA-Z .\']{3,50}$') ||  $(this).val().match('^[ ]*$')) ) {
+          $("p.reg-name-error").append("That's not a name.");
+          $('#reg_submit').attr("disabled", true);
+        }
+    });
+    $("#reg-company_name").on("blur", function() {
+          $("p.reg-company_name-error").empty();
+        $('#reg_submit').removeAttr("disabled");
+        if ( $(this).val() !="" && (!$(this).val().match('^[a-zA-Z .\']{3,50}$') ||  $(this).val().match('^[ ]*$')) ) {
+          $("p.reg-company_name-error").append("That's not a name.");
+          $('#reg_submit').attr("disabled", true);
+        }
+    });
+    $("#reg-phone").on("blur", function() {
+          $("p.reg-phone-error").empty();
+        $('#reg_submit').removeAttr("disabled");
+        if ( $(this).val() !="" && !$(this).val().match('^[0-9]{4,12}$') ) {
+          $("p.reg-phone-error").append("That's not a phone number.");
+          $('#reg_submit').attr("disabled", true);
+        }
+    });
+    $("#reg-email").on("blur", function() {
+          $("p.reg-email-error").empty();
+        $('#reg_submit').removeAttr("disabled");
+        if ( $(this).val() !="" && !$(this).val().match('^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$') ) {
+          $("p.reg-email-error").append("That's not a valid email.");
+          $('#reg_submit').attr("disabled", true);
+        }
+    });
+    $("#reg-password").on("blur", function() {
+        $("p.reg-password-error").empty();
+        $('#reg_submit').removeAttr("disabled");
+        if ( $(this).val() !="" && !$(this).val().match('^.{6,}$') ) {
+          $("p.reg-password-error").append("Password must be atleast 8 character long.");
+          $('#reg_submit').attr("disabled", true);
+        }
+    });
+
+    //login
+    $("#login-email").on("blur", function() {
+        $("p.login-email-error").empty();
+        $('#login_submit').removeAttr("disabled");
+        if ( $(this).val() !="" && !$(this).val().match('^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$') ) {
+          $("p.login-email-error").append("That's not a valid email.");
+          $('#login_submit').attr("disabled", true);
+        }
+    });
+    $("#login-password").on("blur", function() {
+        $("p.login-password-error").empty();
+        $('#login_submit').removeAttr("disabled");
+        if ( !$(this).val().match('^.{6,}$') ) {
+          $("p.login-password-error").append("Password must be atleast 8 character long.");
+          $('#login_submit').attr("disabled", true);
+        }
+    });
+    //forget pass
+    $("#forget-email").on("blur", function() {
+        $("p.forget-email-error").empty();
+        $('#forget_submit').removeAttr("disabled");
+        if ( $(this).val() !="" && !$(this).val().match('^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$') ) {
+          $("p.forget-email-error").append("That's not a valid email.");
+          $('#forget_submit').attr("disabled", true);
+        }
+    });
+  });
+
+</script>
+<script>
+    document.getElementById('login').style.display = 'block';
+    document.getElementById('register').style.display = 'none';
+    document.getElementById('forgot').style.display = 'none';
+    document.getElementById('reg_success').style.display = 'none';
+    document.getElementById('reset_email_sent').style.display = 'none';
+
+</script>
+{% block script %}{% endblock %}
+<script>
+  function ShowAndHideStuff(id_to_show, id_to_hide1, id_to_hide2) {
+    $('p.error').text(" ");
+    document.getElementById(id_to_show).style.display = 'block';
+    document.getElementById(id_to_hide1).style.display = 'none';
+    document.getElementById(id_to_hide2).style.display = 'none';
+    document.getElementById('reg_success').style.display = 'none';
+    document.getElementById('reset_email_sent').style.display = 'none';
+}
+
+</script>
+
+</body>
+</html>
