@@ -65,10 +65,9 @@ def my_login(request):
     else:
         return render(request, 'login.html')
 
-def logout(request):
-    if 'email' in request.session:
-        request.session.flush()
-        return redirect(my_login)
+def my_logout(request):
+    logout(request)
+    return redirect(my_login)
 
 def player_dashboard(request):
     return render(request, 'player-dashboard/app.html')

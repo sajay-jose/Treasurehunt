@@ -24,7 +24,7 @@ urlpatterns = [
     path('register',views.register),
     path('register_success', views.register_sucess),
     path('login',views.my_login),
-    path('logout', views.logout),
+    path('logout', views.my_logout),
     path('player-dashboard', views.player_dashboard),
     path('coordinator-dashboard', views.coordinator_dashboard),
     path('send_test_email',views.send_test_email),

@@ -69,6 +69,7 @@
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="avatar_login"><img alt="" src="{% static 'image/avatar1_small.png' %}"></span>
                             <span class="username text-muted">Admin</span>
                             <b class="caret"></b>
                         </a>
@@ -109,8 +110,7 @@
                                 </svg>
                                 Change Password</a></li>
                             <!--<li><a href="#"><i class="fa fa-bell-o"></i> Notifications</a></li> -->
-                            <li><a href="logout"
-                                   onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                            <li><a href="logout">
                                 <svg
                                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                                     <g id="log-out" transform="translate(-2 -2)">
@@ -130,11 +130,6 @@
                                     </g>
                                 </svg>
                                 Log Out</a>
-                                <form id="logout-form"
-                                      action="logout"
-                                      method="POST" style="display: none;">
-                                    <input type="hidden" name="_token" value="jsoaEUmywYL6M3ZcryqWUvcAasJNwcyruUGXMPK2">
-                                </form>
                             </li>
                         </ul>
                     </li>
