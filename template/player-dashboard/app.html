@@ -38,13 +38,15 @@
                       <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="avatar_login"><img alt="" src="{% static 'image/avatar1_small.png' %}"></span>
-                          <span class="username text-muted">Admin</span>
+                          <span class="username text-muted">
+                              {{ user.name }}
+                          </span>
                           <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout dropdown-menu-right">
                           <div class="log-arrow-up"></div>
 
-                          <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="18.163" height="18" viewBox="0 0 18.163 18">
+                          <li><a href="edit_profile"><svg xmlns="http://www.w3.org/2000/svg" width="18.163" height="18" viewBox="0 0 18.163 18">
                                 <g id="edit" transform="translate(-1 -0.879)">
                                   <path id="Path_343" data-name="Path 343" d="M9.157,4H3.59A1.59,1.59,0,0,0,2,5.59V16.723a1.59,1.59,0,0,0,1.59,1.59H14.723a1.59,1.59,0,0,0,1.59-1.59V11.157" transform="translate(0 -0.434)" fill="none" stroke="#013358" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
                                   <path id="Path_344" data-name="Path 344" d="M16.349,2.373a1.687,1.687,0,0,1,2.386,2.386l-7.554,7.554L8,13.108l.8-3.181Z" transform="translate(-1.229)" fill="none" stroke="#013358" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
@@ -54,7 +56,7 @@
                           </li>
 
                           <!--<li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>-->
-                          <li><a href="password"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="17.219" viewBox="0 0 18 17.219">
+                          <li><a href="change_password"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="17.219" viewBox="0 0 18 17.219">
                                 <g id="edit-3" transform="translate(-2 -1.879)">
                                   <path id="Path_345" data-name="Path 345" d="M12,20h8" transform="translate(-1 -1.902)" fill="none" stroke="#013358" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
                                   <path id="Path_346" data-name="Path 346" d="M15,3.431A1.886,1.886,0,1,1,17.667,6.1L6.556,17.209,3,18.1l.889-3.556Z" fill="none" stroke="#013358" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
@@ -64,7 +66,7 @@
                           </li>
 
                           <!--<li><a href="#"><i class="fa fa-bell-o"></i> Notifications</a></li> -->
-                          <li><a href="logout">
+                          <li><a href="{% url 'logout' %}">
                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                                 <g id="log-out" transform="translate(-2 -2)">
                                   <path id="Path_347" data-name="Path 347" d="M7.667,17H4.556A1.556,1.556,0,0,1,3,15.444V4.556A1.556,1.556,0,0,1,4.556,3H7.667" transform="translate(0 0)" fill="none" stroke="#013358" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
@@ -180,10 +182,10 @@
                                 </div>
                             </div>
                             <div>
-                                <h2>Welcome, {{ user.username }}!</h2>
+                                <h2>Welcome, {{ user.name }}!</h2>
                                 <p>Game Information:</p>
                                 <ul>
-                                    <li><a href="game_details">View game details</a></li>
+                                    <li><a href="player_game_details">View game details</a></li>
                                 </ul>
                                 <p>Scoreboard:</p>
                                 <ul>

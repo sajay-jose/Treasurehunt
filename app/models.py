@@ -1,13 +1,36 @@
 from django.db import models
+
 from django.contrib.auth.hashers import make_password
 import uuid
 from datetime import datetime, timedelta
 from django.conf import settings
 from django.utils.crypto import get_random_string
 import hashlib
+from django.contrib.auth.models import AbstractUser,Group, Permission
 # Create your models here.
 
 
+
+class Game(models.Model):
+    LEVEL_CHOICES = (
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+    )
+
+    game_name = models.CharField(max_length=50)
+    game_id = models.CharField(max_length=50, unique=True)
+    game_email = models.EmailField(unique=True)
+
+    start_date = models.DateTimeField(auto_now_add=True)
+    end_date = models.DateTimeField(auto_now_add=True)
+
+    creater = models.ForeignKey('User', related_name='games_created', on_delete=models.CASCADE)
+    # player = models.ForeignKey(app.User, on_delete=models.CASCADE)
+    # coordinator = models.ForeignKey(app.User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.game_name
 
 
 class User(models.Model):
@@ -21,22 +44,40 @@ class User(models.Model):
     password = models.CharField(max_length=128)
     new_password = models.CharField(max_length=128,null=True,blank=True)
     register_as = models.IntegerField(choices=REGISTER_CHOICES, null=False, blank=False)
-    game_name = models.CharField(max_length=50, blank=True, null=True)
-    game_id = models.CharField(max_length=20, blank=True, null=True)
+    # game_name = models.CharField(max_length=50, blank=True, null=True)
+    # game_uid = models.CharField(max_length=20, blank=True, null=True)
+    game = models.ForeignKey(Game, related_name='players', on_delete=models.CASCADE, null=True, blank=True)
     phonecode = models.CharField(max_length=10)
     phone = models.CharField(max_length=20)
     token = models.CharField(max_length=64, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.BooleanField(default=False)
+    last_login = models.DateTimeField(null=True, blank=True)
+
     def __str__(self):
         return self.name
+    # groups = models.ManyToManyField(
+    #     Group,
+    #     related_name='app_users',  # specify a unique name for the reverse accessor
+    #     blank=True,
+    #     help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+    #     verbose_name='groups',
+    # )
+    # user_permissions = models.ManyToManyField(
+    #     Permission,
+    #     related_name='app_users',  # specify a unique name for the reverse accessor
+    #     blank=True,
+    #     help_text='Specific permissions for this user.',
+    #     verbose_name='user permissions',
+    # )
 
-    def set_password(self, raw_password):
-        self.password = make_password(raw_password)
 
-    def check_password(self, raw_password):
-        return check_password(raw_password, self.password)
+    # def set_password(self, raw_password):
+    #     self.password = make_password(raw_password)
+    #
+    # def check_password(self, raw_password):
+    #     return check_password(raw_password, self.password)
 
     # def delete(self, *args, **kwargs):
     #     self.deleted = True
@@ -65,20 +106,19 @@ class User(models.Model):
             return False
         return True
 
-class Game(models.Model):
-    LEVEL_CHOICES = (
-        ('1', '1'),
-        ('2', '2'),
-        ('3', '3'),
-    )
-
-    game_name = models.CharField(max_length=50)
-    game_id = models.CharField(max_length=50, unique=True)
-    game_level = models.CharField(max_length=1, choices=LEVEL_CHOICES)
+class Level(models.Model):
+    id = models.AutoField(primary_key=True)
+    game = models.ForeignKey(Game, related_name='games', on_delete=models.CASCADE, null=True, blank=True)
+    game_level = models.CharField(max_length=1)
     clues = models.CharField(max_length=500)
-    start_date = models.DateTimeField(auto_now_add=True)
-    end_date = models.DateTimeField(auto_now_add=True)
     rules = models.TextField()
+    password_result = models.CharField(max_length=50)
+    password = models.CharField(max_length=50)
+    number = models.IntegerField()
+    answer = models.CharField(max_length=150)
 
-    def __str__(self):
-        return self.game_name
+# class Coordinator(models.Model):
+#     coordinator = models.ForeignKey(User, on_delete=models.CASCADE)
+#
+# class Player(models.Model):
+#     player = models.ForeignKey(User, on_delete=models.CASCADE)

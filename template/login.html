@@ -60,7 +60,7 @@
                     <div class="white_box banner_forms" id="login">
                         <h3>Login</h3>
                         <form method="POST" action="/login">
-                            {% csrf_token %}
+                        {% csrf_token %}
                             <div class="mb-3">
                                 <input class="form-control  " id="login-email" placeholder="Email" type="email"
                                        name="email" value="" required autofocus>
@@ -96,8 +96,7 @@
 
                     <div class="white_box banner_forms" id="forgot">
                         <h3>Forgot Password</h3>
-                        <form method="POST"
-                              action="password_reset">
+                        <form method="POST" action="password_reset">
                             {% csrf_token %}
                             <div class="mb-3">
                                 <input class="form-control" id="forget-email" placeholder="Email" type="email"
@@ -118,7 +117,7 @@
                     <div class="white_box banner_forms" id="register">
                         <h3>Register</h3>
                         <form method="POST" action="/register">
-                        {% csrf_token %}
+                            {% csrf_token %}
                             <div class="mb-3">
                                 <input type="text" class="form-control" id="reg-name" placeholder="Name" name="name"
                                        required autocomplete="name" autofocus>

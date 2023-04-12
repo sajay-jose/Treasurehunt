@@ -2,6 +2,7 @@
 
 
 {% block content %}
+
 <div class="center">
  <h2>Scoreboard</h2>
   <table>
@@ -9,19 +10,36 @@
       <th>Name</th>
       <th>Score</th>
     </tr>
-    {% for i in user %}
+  {% for i in user %}
     <tr>
       <td>{{ i.name }}</td>
       <td>{{ i.email }}</td>
     </tr>
+    {% endfor %}
   </table>
 </div>
-{% endfor %}
+
 <style>
     .center {
   margin: auto;
   width: 50%;
   padding: 80px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
 }
 </style>
 {% endblock %}

@@ -6,17 +6,24 @@
   <table>
     <thead>
       <tr>
+        <th>ID</th>
         <th>Name</th>
         <th>Email</th>
-        <th>ID</th>
+        <th>Game</th>
+        <th>Update</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
-      {% for i in user %}
+      {% for i in game_players %}
         <tr>
+          <td>{{ i.uid }}</td>
           <td>{{ i.name }}</td>
           <td>{{ i.email }}</td>
-          <td>{{ i.uid }}</td>
+          <td>{{ i.game.game_name }}</td>
+          <td><button><a href="{% url 'edit_player' uid=i.uid %}">Update</a></button></td>
+          <td><button><a href="{% url 'delete_player' uid=i.uid %}">Delete</a></button></td>
+
         </tr>
       {% endfor %}
     </tbody>
@@ -28,5 +35,49 @@
   width: 50%;
   padding: 40px;
 }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+button {
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  padding: 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.Update {
+  background-color: #2196f3;
+}
+
+button.Delete {
+  background-color: #f44336;
+}
+
+button:hover {
+  background-color: #555;
+  color: #fff;
+}
+
 </style>
 {% endblock %}

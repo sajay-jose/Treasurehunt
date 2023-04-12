@@ -3,7 +3,7 @@
 {% block content %}
 <div class="center">
     <div>
-        <form method="POST" action="{% url 'edit_player' uid=player.uid %}">
+        <form method="POST" action="{% url 'edit_level' id=game.id %}">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Save</button>
@@ -18,5 +18,4 @@
   padding: 40px;
 }
 </style>
-
 {% endblock %}
