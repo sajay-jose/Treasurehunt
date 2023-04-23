@@ -1,0 +1,54 @@
+{% extends 'player-dashboard/app.html' %}
+{% block content %}
+<div class="center" >
+    <h2>Join a Game</h2>
+    <form method="POST" action="player_home" style="padding:50px;">
+        {% csrf_token %}
+        <input type="text" value="{{id}}" name="id" hidden>
+        <label for="game_id">Game ID:</label>
+        <input type="text" id="game_id" name="game_id"><br><br>
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+      <button type="submit">Submit</button>
+    </form>
+</div>
+<style>
+.center {
+  margin: 80px;
+  width: 70%;
+  padding: 80px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+}
+input[type=text] {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+</style>
+{% endblock %}

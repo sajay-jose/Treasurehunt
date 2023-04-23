@@ -20,8 +20,6 @@ class Game(models.Model):
 
     game_name = models.CharField(max_length=50)
     game_id = models.CharField(max_length=50, unique=True)
-    game_email = models.EmailField(unique=True)
-
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(auto_now_add=True)
 
@@ -56,7 +54,8 @@ class User(models.Model):
     last_login = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        registered_as = dict(self.REGISTER_CHOICES).get(str(self.register_as))
+        return f"{self.name} ({registered_as})"
     # groups = models.ManyToManyField(
     #     Group,
     #     related_name='app_users',  # specify a unique name for the reverse accessor
@@ -108,17 +107,27 @@ class User(models.Model):
 
 class Level(models.Model):
     id = models.AutoField(primary_key=True)
-    game = models.ForeignKey(Game, related_name='games', on_delete=models.CASCADE, null=True, blank=True)
-    game_level = models.CharField(max_length=1)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, null=True, blank=True)
+    game_level = models.IntegerField()
     clues = models.CharField(max_length=500)
     rules = models.TextField()
     password_result = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
-    number = models.IntegerField()
     answer = models.CharField(max_length=150)
 
+    def __str__(self):
+        return f"{self.game} level {self.game_level}"
 # class Coordinator(models.Model):
 #     coordinator = models.ForeignKey(User, on_delete=models.CASCADE)
 #
 # class Player(models.Model):
 #     player = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Game_login(models.Model):
+    games = models.ForeignKey(Game, on_delete=models.CASCADE)
+    player = models.ForeignKey(User, on_delete=models.CASCADE)
+    current_level = models.IntegerField(default=1)
+    # joined_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+          return f"{self.player.name} joined {self.games.game_name}"

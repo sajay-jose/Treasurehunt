@@ -18,11 +18,11 @@
       {% for i in game_players %}
         <tr>
           <td>{{ i.uid }}</td>
-          <td>{{ i.name }}</td>
+          <td>{{ i.user.name }}</td>
           <td>{{ i.email }}</td>
-          <td>{{ i.game.game_name }}</td>
-          <td><button><a href="{% url 'edit_player' uid=i.uid %}">Update</a></button></td>
-          <td><button><a href="{% url 'delete_player' uid=i.uid %}">Delete</a></button></td>
+          {% for i in games %}
+          <td>{{ i.game_name }}</td>
+          {% endfor %}
 
         </tr>
       {% endfor %}

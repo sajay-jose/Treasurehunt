@@ -1,0 +1,30 @@
+{% extends 'player-dashboard/app.html' %}
+
+
+{% block content %}
+<div class="center">
+ <h2>Game Details</h2>
+    {% if level.id %}
+    <form method="post" action="{% url 'check_answer' id=level.id %}">
+    {% endif %}
+    {% csrf_token %}
+    <label for="answer">Answer:</label>
+    <input type="text" id="answer" name="answer"><br><br>
+    <button type="submit">Submit</button>
+    </form>
+    {% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+<style>
+    .center {
+  margin: auto;
+  width: 50%;
+  padding: 80px;
+}
+</style>
+{% endblock %}

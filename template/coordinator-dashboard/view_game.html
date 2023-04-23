@@ -2,14 +2,48 @@
 
 {% block content %}
 <div class="center">
-    <div>
-        <form method="POST" action="{% url 'view_game' id=game.id %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Save</button>
-        </form>
+     <button><a href="{% url 'create_level' id=game.pk %}">Create Level</a></button>
+<!--    <div>-->
+<!--        <form method="POST" action="{% url 'view_game' id=game.id %}">-->
+<!--            {% csrf_token %}-->
+<!--&lt;!&ndash;            {{ form.as_p }}&ndash;&gt;-->
+<!--&lt;!&ndash;            <button type="submit">Save</button>&ndash;&gt;-->
+<!--        </form>-->
 
-    </div>
+<!--    </div>-->
+<!--</div>-->
+<!--<style>-->
+<!--    .center {-->
+<!--  margin: auto;-->
+<!--  width: 50%;-->
+<!--  padding: 40px;-->
+<!--}-->
+<!--</style>-->
+    <h1>Game Details</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Game Level</th>
+        <th>password</th>
+        <th>answer</th>
+        <th>Clues</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in levels %}
+        <tr>
+          <td>{{ i.game_level }}</td>
+          <td>{{ i.password }}</td>
+          <td>{{ i.answer }}</td>
+          <td>{{ i.clues }}</td>
+          <td><button><a href="{% url 'edit_level' id=i.id %}">Update</a></button></td>
+          <td><button><a href="{% url 'delete_level' id=game.pk level_id=i.id %}">Delete</a></button></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 <style>
     .center {
@@ -17,5 +51,49 @@
   width: 50%;
   padding: 40px;
 }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+button {
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  padding: 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.Update {
+  background-color: #2196f3;
+}
+
+button.Delete {
+  background-color: #f44336;
+}
+
+button:hover {
+  background-color: #555;
+  color: #fff;
+}
+
 </style>
 {% endblock %}

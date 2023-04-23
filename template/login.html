@@ -36,6 +36,13 @@
                             </button>
                         </li>
                     </ul>
+                    {% if messages %}
+                    <ul class="messages">
+                    {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                    {% endif %}
                 </div>
             </div>
         </nav>
@@ -144,17 +151,17 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <input type="text" class="form-control" id="game_name" placeholder="Game Name"
-                                       name="game_name" required autofocus>
-                                <p class="error reg-game_name-error"></p>
-                            </div>
+<!--                            <div class="mb-3">-->
+<!--                                <input type="text" class="form-control" id="game_name" placeholder="Game Name"-->
+<!--                                       name="game_name" required autofocus>-->
+<!--                                <p class="error reg-game_name-error"></p>-->
+<!--                            </div>-->
 
-                            <div class="mb-3">
-                                <input type="text" class="form-control" id="game_id" placeholder="Game ID"
-                                       name="game_id" required autofocus>
-                                <p class="error reg-game_id-error"></p>
-                            </div>
+<!--                            <div class="mb-3">-->
+<!--                                <input type="text" class="form-control" id="game_id" placeholder="Game ID"-->
+<!--                                       name="game_id" required autofocus>-->
+<!--                                <p class="error reg-game_id-error"></p>-->
+<!--                            </div>-->
                             <div class="mb-3 row g-2 align-items-center">
                                 <div class="col-md-3 col-auto flex-fill">
                                     <select class="form-control" id="phonecode" name="phonecode" required>

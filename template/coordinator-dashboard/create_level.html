@@ -2,8 +2,11 @@
 
 {% block content %}
  <div class="center">
-    <form method="post" action="{% url 'edit_level' id=level.id %}">
+    <form method="post" action="{% url 'create_level' id=game.pk %}">
       {% csrf_token %}
+      <label for="game_level">Game Level:</label>
+      <input type="text" id="game_level" name="game_level"><br><br>
+
       <label for="password">Password:</label>
       <input type="text" id="password" name="password"><br><br>
 

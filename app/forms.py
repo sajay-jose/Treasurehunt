@@ -11,10 +11,7 @@ class EditplayerForm(ModelForm):
 class EditProfileForm(UserChangeForm):
     class Meta:
         model = User
-        fields = [
-            'name',
-            'email',
-        ]
+        fields = ['name', 'email']
 
 class EditgameForm(ModelForm):
     class Meta:
@@ -33,4 +30,4 @@ class EditlevelForm(ModelForm):
     password_result = forms.ChoiceField(choices=TYPE_CHOICES, required=True)
     class Meta:
         model = Level
-        fields = ['password_result', 'clues', 'password']
+        fields = ['password', 'answer', 'clues']

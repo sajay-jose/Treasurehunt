@@ -32,6 +32,8 @@ urlpatterns = [
     path('password_reset',views.password_reset),
     path('reset/<str:uid>/<str:token>/', views.password, name='password'),
     path('change_password',views.change_password),
+    path('player_home', views.player_home, name='player_home'),
+    path('check_answer/<int:id>', views.check_answer, name= 'check_answer'),
     path('player_game_details',views.player_game_details),
     path('scoreboard',views.scoreboard),
     path('player_details', views.player_details, name='player_details'),
@@ -43,6 +45,9 @@ urlpatterns = [
     path('analytics', views.analytics, name='analytics'),
     path('edit_game/int:<id>', views.edit_game, name='edit_game'),
     path('view_game/int:<id>', views.view_game, name='view_game'),
+    path('create_level/int:<id>', views.create_level, name='create_level'),
     path('delete_game/int:<id>', views.delete_game, name='delete_game'),
-    path('edit_level/int:<id>', views.edit_level, name='edit_level')
+    path('game_login', views.game_login),
+    path('edit_level/int:<id>',views.edit_level, name='edit_level'),
+    path('delete_level/<int:id>/<int:level_id>', views.delete_level, name='delete_level')
 ]

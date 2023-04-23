@@ -1,9 +1,19 @@
 {% extends 'player-dashboard/app.html' %}
 {% block content %}
+<div class="center">
 <h2>Edit Profile</h2>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn btn-primary">Save Changes</button>
   </form>
+</div>
+<style>
+    .center {
+  margin: auto;
+  width: 50%;
+  padding: 80px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+</style>
 {% endblock %}

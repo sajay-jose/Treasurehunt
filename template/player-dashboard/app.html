@@ -95,6 +95,8 @@
                                         <h2>Dashboard</h2>
                                     </div>
                                 </div>
+                                <h2>Welcome, {{ user.name }}!</h2><br><br>
+                                <h2>Game Information:</h2>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 grid-margin stretch-card">
@@ -111,9 +113,14 @@
                                                                         </div>
                                                                     </span>
                                                                 </div>
-                                                                <div class="point_cont text_semi_color">Total number of
-                                                                    users
-                                                                    <span class="d-inline-block w-100"> 9</span>
+                                                                <div class="point_cont text_semi_color">Current Level
+                                                                    <span class="d-inline-block w-100"> {{level.game_level}}</span>
+                                                                </div>
+                                                                <div class="point_cont text_semi_color">Game Name:
+                                                                    <span class="d-inline-block w-100"> {{ game.games.game_name }}</span>
+                                                                </div>
+                                                                <div class="point_cont text_semi_color">Coordinator
+                                                                    <span class="d-inline-block w-100"> {{ game.games.creater }}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -139,51 +146,75 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 grid-margin stretch-card">
-                                    <div class="card pointbox">
-                                        <div class="card-body p-0">
-                                            <div class="total_points_sec">
-                                                <div class="point_top">
-                                                    <div class="row">
-                                                        <div class="flex-grow-1 col_full">
-                                                            <div class="points_top d-flex flex-nowrap">
-                                                                <div class="p_style"> <span class="blinkround_sec">
-                                                                        <div class="blinkround blueblinkround" href="">
-                                                                            <span>C</span>
-                                                                        </div>
-                                                                    </span>
-                                                                </div>
-                                                                <div class="point_cont text_semi_color">Total number of
-                                                                    cases<span class="d-inline-block w-100 "> 32 </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="point_bottom">
-                                                    <div class="row reward_regional">
-                                                        <div class="col">
-                                                            <div class="reward_point text_semi_color">Approved<span
-                                                                    class="d-inline-block w-100 text-dark">
-                                                                    1 </span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="regional_point text_semi_color">Closed<span
-                                                                    class="d-inline-block w-100 text-dark">
-                                                                    0 </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+<!--                                <div class="col-md-6 grid-margin stretch-card">-->
+<!--                                    <div class="card pointbox">-->
+<!--                                        <div class="card-body p-0">-->
+<!--                                            <div class="total_points_sec">-->
+<!--                                                <div class="point_top">-->
+<!--                                                    <div class="row">-->
+<!--                                                        <div class="flex-grow-1 col_full">-->
+<!--                                                            <div class="points_top d-flex flex-nowrap">-->
+<!--                                                                <div class="p_style"> <span class="blinkround_sec">-->
+<!--                                                                        <div class="blinkround blueblinkround" href="">-->
+<!--                                                                            <span>C</span>-->
+<!--                                                                        </div>-->
+<!--                                                                    </span>-->
+<!--                                                                </div>-->
+<!--                                                                <div class="point_cont text_semi_color">Total number of-->
+<!--                                                                    cases<span class="d-inline-block w-100 "> 32 </span>-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                                <div class="point_bottom">-->
+<!--                                                    <div class="row reward_regional">-->
+<!--                                                        <div class="col">-->
+<!--                                                            <div class="reward_point text_semi_color">Approved<span-->
+<!--                                                                    class="d-inline-block w-100 text-dark">-->
+<!--                                                                    1 </span>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+<!--                                                        <div class="col">-->
+<!--                                                            <div class="regional_point text_semi_color">Closed<span-->
+<!--                                                                    class="d-inline-block w-100 text-dark">-->
+<!--                                                                    0 </span>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                             </div>
-                            <div>
-                                <h2>Welcome, {{ user.name }}!</h2>
-                                <p>Game Information:</p>
+<!--                             {% if messages %}-->
+<!--                            <ul class="messages">-->
+<!--                            {% for message in messages %}-->
+<!--                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>-->
+<!--                            {% endfor %}-->
+<!--                            </ul>-->
+<!--                            {% endif %}-->
+                            {% if messages %}
+                              <ul class="messages">
+                                {% for message in messages %}
+                                  <li class="{{ message.tags }}">{{ message }}</li>
+                                {% endfor %}
+                              </ul>
+                            {% endif %}
+                            <div class="col-md-6 mx-auto">
+<!--                                <h2>Welcome, {{ user.name }}!</h2>-->
+<!--                                <h2>Game Information:</h2>-->
+<!--                                <p>Game Name:{{ game.games.game_name }}</p>-->
+<!--                                <p>Game ID:{{ game.games.game_id }}</p>-->
+<!--                                <p>Coordinator:{{ game.games.creater }}</p>-->
+<!--                                <p>Coordinator:{{ level.game_level }}</p>-->
+<!--                                <h1>{{ current_level.game_level }}</h1>-->
+                                <h2>Clues:</h2> <p>{{ level.clues }}</p>
+                                <h2>Password:</h2> <p>{{ level.password }}</p>
+                                {% if level.id %}
+                                <a href="{% url 'check_answer' level.id %}" class="btn btn-info">Go to next level</a>
+                                {% endif %}
                                 <ul>
                                     <li><a href="player_game_details">View game details</a></li>
                                 </ul>
@@ -204,15 +235,39 @@
         </div>
     </div>
 
-    <style>
-        .logo-img {
-            height: 60px;
-            width: auto;
-        }
-        .navbar .navbar-menu-wrapper {
-        width: calc(100% ) !important;
-        }
-    </style>
+<style>
+.logo-img {
+    height: 60px;
+    width: auto;
+}
+.navbar .navbar-menu-wrapper {
+width: calc(100% ) !important;
+}
+.messages {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.messages li {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.messages .error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.messages .success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+</style>
     <script src="{% static 'dashboard/js/vendor.bundle.base.js' %}"></script>
     <script src="{% static 'dashboard/js/off-canvas.js' %}"></script>
     <script src="{% static 'dashboard/js/hoverable-collapse.js' %}"></script>

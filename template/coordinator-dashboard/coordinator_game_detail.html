@@ -25,13 +25,6 @@
           <td>{{ i.start_date }}</td>
           <td>{{ i.end_date }}</td>
           <td>{{ i.rules }}</td>
-<!--          <td><select onchange="location = this.value;">-->
-<!--              <option value="" selected disabled hidden>Edit Level</option>-->
-<!--              <option value="{% url 'edit_level' id=i.id %}">Level 1</option>-->
-<!--              <option value="{% url 'edit_level' id=i.id %}">Level 2</option>-->
-<!--              <option value="{% url 'edit_level' id=i.id %}">Level 3</option>-->
-<!--              &lt;!&ndash; Add more options as needed &ndash;&gt;-->
-<!--            </select></td>-->
           <td><button><a href="{% url 'view_game' id=i.id %}">View</a></button></td>
           <td><button><a href="{% url 'edit_game' id=i.id %}">Update</a></button></td>
           <td><button><a href="{% url 'delete_game' id=i.id %}">Delete</a></button></td>
