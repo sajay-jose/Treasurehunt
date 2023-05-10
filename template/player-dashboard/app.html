@@ -210,6 +210,7 @@
 <!--                                <p>Coordinator:{{ game.games.creater }}</p>-->
 <!--                                <p>Coordinator:{{ level.game_level }}</p>-->
 <!--                                <h1>{{ current_level.game_level }}</h1>-->
+                                {{ level.rules }}
                                 <h2>Clues:</h2> <p>{{ level.clues }}</p>
                                 <h2>Password:</h2> <p>{{ level.password }}</p>
                                 {% if level.id %}
@@ -217,10 +218,6 @@
                                 {% endif %}
                                 <ul>
                                     <li><a href="player_game_details">View game details</a></li>
-                                </ul>
-                                <p>Scoreboard:</p>
-                                <ul>
-                                    <li><a href="scoreboard">View scoreboard</a></li>
                                 </ul>
                             </div>
                         </div>

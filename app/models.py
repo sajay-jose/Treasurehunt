@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from django.conf import settings
 from django.utils.crypto import get_random_string
 import hashlib
+from django.utils import timezone
 from django.contrib.auth.models import AbstractUser,Group, Permission
 # Create your models here.
 
@@ -20,6 +21,7 @@ class Game(models.Model):
 
     game_name = models.CharField(max_length=50)
     game_id = models.CharField(max_length=50, unique=True)
+    rules = models.TextField()
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(auto_now_add=True)
 
@@ -56,25 +58,11 @@ class User(models.Model):
     def __str__(self):
         registered_as = dict(self.REGISTER_CHOICES).get(str(self.register_as))
         return f"{self.name} ({registered_as})"
-    # groups = models.ManyToManyField(
-    #     Group,
-    #     related_name='app_users',  # specify a unique name for the reverse accessor
-    #     blank=True,
-    #     help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
-    #     verbose_name='groups',
-    # )
-    # user_permissions = models.ManyToManyField(
-    #     Permission,
-    #     related_name='app_users',  # specify a unique name for the reverse accessor
-    #     blank=True,
-    #     help_text='Specific permissions for this user.',
-    #     verbose_name='user permissions',
-    # )
 
 
     # def set_password(self, raw_password):
     #     self.password = make_password(raw_password)
-    #
+
     # def check_password(self, raw_password):
     #     return check_password(raw_password, self.password)
 
@@ -88,40 +76,49 @@ class User(models.Model):
     def generate_password_reset_token(self):
         # Generate a random string
         random_string = get_random_string(length=32)
-        # Generate a hash of the random string
-        token_hash = hashlib.sha256(random_string.encode('utf-8')).hexdigest()
+        # # Generate a hash of the random string
+        # token_hash = hashlib.sha256(random_string.encode('utf-8')).hexdigest()
         # Set the token hash to the user's token field
-        self.token = token_hash
+        self.token = random_string
         self.save()
         # Return the random string as the password reset token
         return random_string
 
+
+
     def is_password_reset_token_valid(self, token):
+        print(f"Checking token '{token}' for user '{self.email}'")
         if self.token != token:
+            print(self.token)
+            print("Token mismatch")
             return False
 
-        expiration_time = datetime.now() - timedelta(hours=settings.PASSWORD_RESET_TIMEOUT_HOURS)
-        if self.date_joined < expiration_time:
+        # expiration_time = datetime.now() - timedelta(hours=settings.PASSWORD_RESET_TIMEOUT_HOURS)
+        # if self.date_joined < expiration_time:
+        #     return False
+        # return True
+        expiration_time = timezone.now() - timezone.timedelta(hours=settings.PASSWORD_RESET_TIMEOUT_HOURS)
+        if self.created_at < expiration_time:
+            print("Token expired")
             return False
         return True
+
+
+
+
 
 class Level(models.Model):
     id = models.AutoField(primary_key=True)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, null=True, blank=True)
     game_level = models.IntegerField()
     clues = models.CharField(max_length=500)
-    rules = models.TextField()
     password_result = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
     answer = models.CharField(max_length=150)
 
     def __str__(self):
         return f"{self.game} level {self.game_level}"
-# class Coordinator(models.Model):
-#     coordinator = models.ForeignKey(User, on_delete=models.CASCADE)
-#
-# class Player(models.Model):
-#     player = models.ForeignKey(User, on_delete=models.CASCADE)
+
 
 class Game_login(models.Model):
     games = models.ForeignKey(Game, on_delete=models.CASCADE)

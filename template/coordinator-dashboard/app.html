@@ -207,51 +207,39 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 grid-margin stretch-card">
-                                <div class="card pointbox">
-                                    <div class="card-body p-0">
-                                        <div class="total_points_sec">
-                                            <div class="point_top">
-                                                <div class="row">
-                                                    <div class="flex-grow-1 col_full">
-                                                        <div class="points_top d-flex flex-nowrap">
-                                                            <div class="p_style"> <span class="blinkround_sec">
-                                                                <div class="blinkround" href="">
-                                                                <span>U</span>
-                                                                </div>
-                                                                </span>
-                                                            </div>
-                                                            <div class="point_cont text_semi_color">Total number of
-                                                                users
-                                                                <span class="d-inline-block w-100"> 9</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- <div class="align-self-end text-right"><a href="enter_the_transfer_amount.html" class="text-dark f_12 text-decoration">Apply for transfer</a></div> -->
+
+                       <div class="total_points_sec">
+                        <div class="point_top">
+                            <div class="row">
+                                <div class="flex-grow-1 col_full">
+                                    <div class="points_top d-flex flex-nowrap">
+                                        <div class="p_style">
+                                            <span class="blinkround_sec">
+                                                <div class="blinkround" href="">
+                                                    <span>U</span>
                                                 </div>
-                                            </div>
-                                            <div class="point_bottom">
-                                                <div class="row reward_regional">
-                                                    <div class="col">
-                                                        <div class="reward_point text_semi_color">Company users<span
-                                                                class="d-inline-block w-100 text-dark">
-                                                                3 </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="regional_point text_semi_color"> Players<span
-                                                                class="d-inline-block w-100 text-dark">
-                                                                6 </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </span>
+                                        </div>
+                                        <div class="point_cont text_semi_color">Total number of users
+                                            <span class="d-inline-block w-100">{{ total_players }}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="point_bottom">
+                            <div class="row reward_regional">
+                                {% for game, player_count in game_player_counts.items %}
+                                    <div class="col">
+                                        <div class="reward_point text_semi_color">{{ game }} players<span
+                                                class="d-inline-block w-100 text-dark">{{ player_count }}</span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
                         <div class="row">
                             <div class="col-12 col-md-6 grid-margin">
                                 <div class="page-header mt-3">

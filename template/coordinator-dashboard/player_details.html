@@ -6,26 +6,34 @@
   <table>
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
         <th>Game</th>
+        <th>Player</th>
+        <th>Email</th>
+        <th>Player Level</th>
         <th>Update</th>
         <th>Delete</th>
       </tr>
     </thead>
     <tbody>
-      {% for i in game_players %}
-        <tr>
-          <td>{{ i.uid }}</td>
-          <td>{{ i.user.name }}</td>
-          <td>{{ i.email }}</td>
-          {% for i in games %}
-          <td>{{ i.game_name }}</td>
-          {% endfor %}
+  {% for game, players in game_players.items %}
 
-        </tr>
-      {% endfor %}
+<!--      <td>{{ game.game_name }}</td>-->
+<!--      <td>{{ players.player.uid}}</td>-->
+    {% for player in players %}
+      <tr>
+        <td>{{ player.games }}</td>
+        <td>{{ player.player.name }}</td>
+        <td>{{ player.player.email }}</td>
+        <td>{{ player.current_level }}</td>
+        <td><button><a href="{% url 'edit_player' uid=player.player.uid %}">Update</a></button></td>
+        <td><button><a href="{% url 'delete_player' uid=player.player.uid game_id=game.game_id %}">Delete</a></button></td>
+      </tr>
+    {% endfor %}
+
+
+
+  {% endfor %}
+
     </tbody>
   </table>
 </div>

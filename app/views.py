@@ -79,8 +79,9 @@ def my_login(request):
                         return HttpResponse("Invalid user type")
                 else:
                     return HttpResponse("Invalid login credentials")
-            except Exception as e:
-                return HttpResponse(f"Error: {str(e)}")
+            except Exception:
+                messages.success(request, "email and password doesn't match")
+                return render(request, 'login.html')
         else:
             return HttpResponse("Email and password are required.")
     else:
@@ -89,6 +90,25 @@ def my_login(request):
 def my_logout(request):
     logout(request)
     return redirect(my_login)
+
+def change_password(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        new_password = request.POST['new_password']
+        confirm_password = request.POST['confirm_password']
+        # Check if the new password and confirm password match
+        if new_password != confirm_password:
+            return HttpResponse("Passwords don't match")
+        # Retrieve the user object based on email
+        user = User.objects.filter(email=email).first()
+        print(user)
+        if user is not None:
+            # Hash the new password and update the user object
+            user.password = new_password
+            user.save()
+            # Redirect the user to the login page
+            return redirect('login')
+    return render(request, 'change_password.html')
 
 def edit_profile(request):
     if 'uid' in request.session:
@@ -126,6 +146,10 @@ def coordinator_dashboard(request):
         games = user.games_created.all()
         players = User.objects.filter(game_login__games__in=games)
         print(players)
+        total_players = players.count()
+        game_player_counts = {}
+        for game in games:
+            game_player_counts[game.game_name] = game.players.count()
         # context = {'players': players, 'games': games, 'user': user}
         # return render(request, 'coordinator-dashboard/app.html', context)
         # print(games)
@@ -135,7 +159,7 @@ def coordinator_dashboard(request):
         #     print(game)
         #     players.extend(game.players.all())
         # print(players)
-        context = {'players': players, 'games': games, 'user': user}
+        context = {'players': players, 'games': games, 'user': user, 'total_players': total_players, 'game_player_counts': game_player_counts}
     # except Game.DoesNotExist:
     #     context = {'players': None, 'game': None, 'user': user}
         return render(request, 'coordinator-dashboard/app.html', context)
@@ -164,6 +188,10 @@ def password_reset(request):
 
         # Generate a password reset token
         token = user.generate_password_reset_token()
+        print(token)
+
+        # Refresh the user instance to get the updated token value from the database
+        # user.refresh_from_db()
         context = {
             'uid': user.uid,
             'email': user.email,
@@ -173,27 +201,28 @@ def password_reset(request):
             'domain': '127.0.0.1:8000',
         }
         subject = 'Password reset'
-        message = 'Please click on the following link to reset your password: {protocol}://{domain}/reset/{uid}/{token}'.format(
+        message = 'Please click on the following link to reset your password: {protocol}://{domain}/password/{uid}/{token}'.format(
             **context)
         send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email])
-        return HttpResponse('Password reset email sent')
+        messages.success(request, "Password reset email sent")
+        return render(request, 'login.html')
 
     return render(request, 'login.html')
 
-def password(request, uid, token):
+
+def password(request, uid=None, token=None):
     if request.method == 'POST':
         email = request.POST['email']
-        password = request.POST['password']
         new_password = request.POST['new_password']
         confirm_password = request.POST['confirm_password']
         # Check if the new password and confirm password match
         if new_password != confirm_password:
             return HttpResponse("Passwords don't match")
         # Authenticate the user with the current password
-        user = authenticate(email=email, password=password)
+        user = User.objects.filter(email=email).first()
         if user is not None:
             # Hash the new password and update the user object
-            user.password = make_password(new_password)
+            user.password = new_password
             user.save()
             # Redirect the user to the login page
             return redirect('login')
@@ -201,39 +230,33 @@ def password(request, uid, token):
             # Return an error message if authentication fails
             return HttpResponse("Invalid current password")
     else:
-        user = get_object_or_404(User, uid=uid)
-        if user.is_password_reset_token_valid(token):
-            # Token is valid, allow user to reset password
-            return render(request, 'change_password.html')
+        user = None
+        if uid is not None and token is not None:
+            # Password reset scenario
+            user = User.objects.filter(uid=uid).first()
+            if user is not None and user.is_password_reset_token_valid(token):
+                # Token is valid, allow user to reset password
+                return render(request, 'change_password.html', {'uid': uid, 'token': token})
+            else:
+                # Token is invalid, show error message
+                return HttpResponse("Invalid password reset link")
         else:
-            # Token is invalid, show error message
-            return HttpResponse("Invalid password reset link")
-
-  # if request.method == 'POST':
-  #   email = request.POST['email']
-  #   password = request.POST['password']
-  #   new_password = request.POST['new_password']
-  #   confirm_password = request.POST['confirm_password']
-  #   # Check if the new password and confirm password match
-  #   if new_password != confirm_password:
-  #       return HttpResponse(" password don't match")
-  #   # Authenticate the user with the current password
-  #   user = authenticate(email=email, password=password)
-  #   if user is not None:
-  #       # Hash the new password and update the user object
-  #       user.password = make_password(new_password)
-  #       user.save()
-  #       # Redirect the user to the login page
-  #       return redirect('login.html')
-  #   else:
-  #       # Return an error message if authentication fails
-  #       return HttpResponse("Invalid current password")
-  # else:
-  #     return render(request, 'change_password.html')
+            # Change password scenario
+            if request.user.is_authenticated:
+                user = request.user
+            else:
+                # Redirect to login page if user is not authenticated
+                return redirect('login')
+        if user is not None:
+            return render(request, 'change_password.html', {'user': user})
+        else:
+            # Return an error message if user is not found
+            return HttpResponse("User not found")
 
 
-def change_password(request):
-    return render(request, 'change_password.html')
+
+
+
 
 def player_home(request):
     if 'uid' in request.session:
@@ -312,33 +335,30 @@ def player_game_details(request):
     context = {'user': user}
     return render(request, 'player-dashboard/check_answer.html', context)
 
-def scoreboard(request):
-    user = User.objects.all()
-    context = {'user': user}
-    return render(request, 'player-dashboard/scoreboard.html', context)
 
 def player_details(request):
     if 'uid' in request.session:
         id = request.session['uid']
-        print(id)
+
         user = User.objects.get(uid=id)
-        print(user)
+
         # games = Game.objects.filter(creater_id=user.uid)
         games = user.games_created.all()
         print(games)
         game_players = {}
-
-
         for game in games:
+            print(game)
             # players = Game_login.objects.filter(game=game.game_name)
-            players = User.objects.filter(game_login__games__in=games)
+            # players = User.objects.filter(game_login__games__in=game)
+            players = Game_login.objects.filter(games=game)
             print(players)
             game_players[game] = players
             print(game_players)
         context = {'game_players': game_players, 'games': games, 'user': user}
         return render(request, 'coordinator-dashboard/player_details.html', context)
     else:
-        return HttpResponse("You are not logged in")
+        messages.error(request, 'You are not logged in')
+        return redirect('logout')
 
 def game_create(request):
     if 'uid' in request.session:
@@ -348,13 +368,13 @@ def game_create(request):
         if request.method == 'POST':
             game_name = request.POST.get('game_name')
             game_id = request.POST.get('game_id')
+            rules = request.POST.get('rules')
             start_date = request.POST.get('start_date')
-            end_date = request.POST.get('end_date')
             game = Game.objects.create(
                     game_name=game_name,
                     game_id=game_id,
+                    rules=rules,
                     start_date=start_date,
-                    end_date=end_date,
                     creater_id=user.uid,
                 )
             game.save()
@@ -401,22 +421,15 @@ def edit_player(request,uid):
         context = {'form': form, 'player': player, 'user': user}
         return render(request, 'coordinator-dashboard/edit_player.html', context)
 
-def delete_player(request,uid):
+def delete_player(request,uid,game_id):
+    game = Game.objects.get(game_id=game_id)
     player = User.objects.get(uid=uid)
+    game_login = Game_login.objects.get(games=game, player=player)
+    game_login.delete()
+
     player.delete()
     return redirect('player_details')
 
-def analytics(request):
-    uid = request.session['uid']
-    user = User.objects.get(uid=uid)
-    users = User.objects.all()
-    # Get the total number of players registered
-    # print(User.objects.filter(register_as='2', email=email))
-    num_players = User.objects.filter(uid=uid).count()
-
-    context = {'num_players': num_players, 'user': user}
-
-    return render(request, 'coordinator-dashboard/analytics.html', context)
 
 def edit_game(request,id):
     uid = request.session['uid']
