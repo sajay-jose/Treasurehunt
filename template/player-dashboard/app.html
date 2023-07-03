@@ -7,18 +7,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {% load static %}
     <title>Treasurehunt.</title>
-    <link href="{% static 'dashboard/css/vendor.bundle.base.css' %}" rel="stylesheet">
-    <link href="{% static 'dashboard/fonts/noto-sans/stylesheet.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'dashboard/css/vendor.bundle.base.css' %}"
+          rel="stylesheet">
     <link href="{% static 'dashboard/css/style.css' %}" rel="stylesheet">
-    <link href="{% static 'dashboard/css/viewport.css'%}" rel="stylesheet">
-    <link href="{% static 'dashboard/css/sweetalert-1.1.3.min.css' %}" rel="stylesheet">
-    <link href="{% static 'dashboard/css/toastr.css' %}" rel="stylesheet">
+    <link href="{% static 'dashboard/css/viewport.css' %}" rel="stylesheet">
+    <link rel="stylesheet"
+          href="{% static 'dashboard/css/sweetalert-1.1.3.min.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'dashboard/css/toastr.css' %}">
+    <!-- DataTables -->
+    <link rel="stylesheet"
+          href="{% static 'dashboard/css/dataTables.bootstrap4.min.css' %}">
     <!-- Layout styles -->
-    <link  href="{% static 'dashboard/font/noto-sans/stylesheet.css" rel="stylesheet">
-    <link  href="{% static 'dashboard/css/select2.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'dashboard/font/noto-sans/stylesheet.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/select2.min.css' %}">
     <!-- End layout styles -->
-    <link  href="{% static 'image/favicon.png' %}" rel="shortcut icon">
-    <link  href="{% static 'dashboard/css/font-awesome/font-awesome.min.css' %}" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'image/favicon.png' %}">
+    <link rel="stylesheet"
+          href="{% static 'dashboard/css/font-awesome/font-awesome.min.css' %}">
+
 </head>
 
 <body>
@@ -32,7 +40,7 @@
         <header class="">
             <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
               <div class="navbar-menu-wrapper d-flex align-items-stretch">
-                    <a class="navbar-brand brand-logo" href="#"><img src="{% static 'image/logo.png' %}" alt="logo" class="ml-2 logo-img">Treasurehunt</a>
+                    <a class="navbar-brand brand-logo" href="#"><img src="{% static 'image/logo.png' %}" alt="logo" class="ml-2  px-2 logo-img">Treasurehunt</a>
                     <ul class="navbar-nav navbar-nav-right">
 
                       <li class="dropdown">
@@ -55,7 +63,6 @@
                               Edit Profile</a>
                           </li>
 
-                          <!--<li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>-->
                           <li><a href="change_password"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="17.219" viewBox="0 0 18 17.219">
                                 <g id="edit-3" transform="translate(-2 -1.879)">
                                   <path id="Path_345" data-name="Path 345" d="M12,20h8" transform="translate(-1 -1.902)" fill="none" stroke="#013358" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
@@ -65,7 +72,6 @@
                               Change Password</a>
                           </li>
 
-                          <!--<li><a href="#"><i class="fa fa-bell-o"></i> Notifications</a></li> -->
                           <li><a href="{% url 'logout' %}">
                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                                 <g id="log-out" transform="translate(-2 -2)">
@@ -92,11 +98,9 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="page_title">
-                                        <h2>Dashboard</h2>
+                                        <h2>Welcome, {{ user.name }}!</h2><br><br>
                                     </div>
                                 </div>
-                                <h2>Welcome, {{ user.name }}!</h2><br><br>
-                                <h2>Game Information:</h2>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 grid-margin stretch-card">
@@ -109,13 +113,23 @@
                                                             <div class="points_top d-flex flex-nowrap">
                                                                 <div class="p_style"> <span class="blinkround_sec">
                                                                         <div class="blinkround" href="">
-                                                                            <span>U</span>
+                                                                            <span>i</span>
                                                                         </div>
                                                                     </span>
                                                                 </div>
+                                                                {% if game_logins %}
                                                                 <div class="point_cont text_semi_color">Current Level
-                                                                    <span class="d-inline-block w-100"> {{level.game_level}}</span>
+                                                                    {% if is_winner %}
+
+                                                                    <span class="d-inline-block w-100"> Winner</span>
+                                                                    {% elif is_completed %}
+
+                                                                    <span class="d-inline-block w-100"> Completed</span>
+                                                                    {% else %}
+                                                                    <span class="d-inline-block w-100"> {{ level.game_level}}</span>
+                                                                    {% endif %}
                                                                 </div>
+                                                                {% endif %}
                                                                 <div class="point_cont text_semi_color">Game Name:
                                                                     <span class="d-inline-block w-100"> {{ game.games.game_name }}</span>
                                                                 </div>
@@ -125,19 +139,65 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                 </div>
-                                                <div class="point_bottom">
-                                                    <div class="row reward_regional">
-                                                        <div class="col">
-                                                            <div class="reward_point text_semi_color">Company users<span
-                                                                    class="d-inline-block w-100 text-dark">
-                                                                    3 </span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="regional_point text_semi_color"> Players<span
-                                                                    class="d-inline-block w-100 text-dark">
-                                                                    6 </span>
+                                                <div class="point_top">
+                                                <div class="row">
+                                                <div class="flex-grow-1 col_full">
+                                                    <div class="points_top d-flex flex-nowrap">
+
+                                                        <span class="d-inline-block large_text w-100"> <b >Game Rules: </b> {{ game.games.rules }}</span>
+
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if game_logins %}
+                                <div class="col-md-6 grid-margin stretch-card">
+                                    <div class="card pointbox">
+                                        <div class="row">
+                                        <div class="p_style p-3">
+                                                                    <span class="blinkround_sec">
+                                                                        <div class="blinkround" href="">
+                                                                            <span>P</span>
+                                                                        </div>
+                                                                    </span>
+                                                                </div>
+                                        <h3 class="mt-3">All Players</h3>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="total_points_sec">
+                                                <div class="point_top">
+                                                    <div class="row">
+                                                        <div class="col_full">
+                                                            <div class="points_top d-flex flex-nowrap">
+
+
+                                                                <div class="point_cont text_semi_color p-3">
+                                                                    <table class="player-info-table p-2">
+                                                                        <tr><th><div class="point_cont text_semi_color">Player Name</div></th>
+                                                                            <th><div class="point_cont text_semi_color pl-5">Level</div></th>
+                                                                        </tr>
+                                                                        {% for login in game_logins %}
+                                                                        <tr>
+                                                                            <td class="player-name"> <span class="d-inline-block w-100"> {{ login.player.name }}</span></td>
+                                                                            {% if login.first_completed %}
+                                                                            <td class="player-name pl-5"> <span class="d-inline-block w-100"> Winner</span></td>
+                                                                            {% elif login.completed %}
+
+                                                                            <td class="player-name pl-5"> <span class="d-inline-block w-100"> Completed</span></td>
+                                                                            {% else %}
+                                                                            <td class="player-name pl-5"> <span class="d-inline-block w-100"> {{ login.current_level }}</span></td>
+                                                                            {% endif %}
+                                                                        </tr>
+                                                                        {% endfor %}
+                                                                    </table>
+                                                                </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -146,55 +206,8 @@
                                         </div>
                                     </div>
                                 </div>
-<!--                                <div class="col-md-6 grid-margin stretch-card">-->
-<!--                                    <div class="card pointbox">-->
-<!--                                        <div class="card-body p-0">-->
-<!--                                            <div class="total_points_sec">-->
-<!--                                                <div class="point_top">-->
-<!--                                                    <div class="row">-->
-<!--                                                        <div class="flex-grow-1 col_full">-->
-<!--                                                            <div class="points_top d-flex flex-nowrap">-->
-<!--                                                                <div class="p_style"> <span class="blinkround_sec">-->
-<!--                                                                        <div class="blinkround blueblinkround" href="">-->
-<!--                                                                            <span>C</span>-->
-<!--                                                                        </div>-->
-<!--                                                                    </span>-->
-<!--                                                                </div>-->
-<!--                                                                <div class="point_cont text_semi_color">Total number of-->
-<!--                                                                    cases<span class="d-inline-block w-100 "> 32 </span>-->
-<!--                                                                </div>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                                <div class="point_bottom">-->
-<!--                                                    <div class="row reward_regional">-->
-<!--                                                        <div class="col">-->
-<!--                                                            <div class="reward_point text_semi_color">Approved<span-->
-<!--                                                                    class="d-inline-block w-100 text-dark">-->
-<!--                                                                    1 </span>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="col">-->
-<!--                                                            <div class="regional_point text_semi_color">Closed<span-->
-<!--                                                                    class="d-inline-block w-100 text-dark">-->
-<!--                                                                    0 </span>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
+                                {% endif %}
                             </div>
-<!--                             {% if messages %}-->
-<!--                            <ul class="messages">-->
-<!--                            {% for message in messages %}-->
-<!--                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>-->
-<!--                            {% endfor %}-->
-<!--                            </ul>-->
-<!--                            {% endif %}-->
                             {% if messages %}
                               <ul class="messages">
                                 {% for message in messages %}
@@ -202,24 +215,15 @@
                                 {% endfor %}
                               </ul>
                             {% endif %}
+                            {% if not is_completed %}
                             <div class="col-md-6 mx-auto">
-<!--                                <h2>Welcome, {{ user.name }}!</h2>-->
-<!--                                <h2>Game Information:</h2>-->
-<!--                                <p>Game Name:{{ game.games.game_name }}</p>-->
-<!--                                <p>Game ID:{{ game.games.game_id }}</p>-->
-<!--                                <p>Coordinator:{{ game.games.creater }}</p>-->
-<!--                                <p>Coordinator:{{ level.game_level }}</p>-->
-<!--                                <h1>{{ current_level.game_level }}</h1>-->
-                                {{ level.rules }}
-                                <h2>Clues:</h2> <p>{{ level.clues }}</p>
-                                <h2>Password:</h2> <p>{{ level.password }}</p>
                                 {% if level.id %}
+                                <h2>Question:</h2> <p>{{ level.question }}</p>
+                                <h2>Clues:</h2> <p>{{ level.clues }}</p>
                                 <a href="{% url 'check_answer' level.id %}" class="btn btn-info">Go to next level</a>
                                 {% endif %}
-                                <ul>
-                                    <li><a href="player_game_details">View game details</a></li>
-                                </ul>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -263,6 +267,9 @@ width: calc(100% ) !important;
   background-color: #d4edda;
   color: #155724;
   border: 1px solid #c3e6cb;
+}
+.large_text{
+font-size: 1.2rem;
 }
 </style>
     <script src="{% static 'dashboard/js/vendor.bundle.base.js' %}"></script>

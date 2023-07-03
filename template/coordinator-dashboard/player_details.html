@@ -1,91 +1,65 @@
 {% extends 'coordinator-dashboard/app.html' %}
 
 {% block content %}
+{% load static %}
 <div class="center">
-  <h1>All Players</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Game</th>
-        <th>Player</th>
-        <th>Email</th>
-        <th>Player Level</th>
-        <th>Update</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-  {% for game, players in game_players.items %}
-
-<!--      <td>{{ game.game_name }}</td>-->
-<!--      <td>{{ players.player.uid}}</td>-->
-    {% for player in players %}
-      <tr>
-        <td>{{ player.games }}</td>
-        <td>{{ player.player.name }}</td>
-        <td>{{ player.player.email }}</td>
-        <td>{{ player.current_level }}</td>
-        <td><button><a href="{% url 'edit_player' uid=player.player.uid %}">Update</a></button></td>
-        <td><button><a href="{% url 'delete_player' uid=player.player.uid game_id=game.game_id %}">Delete</a></button></td>
-      </tr>
-    {% endfor %}
-
-
-
-  {% endfor %}
-
-    </tbody>
-  </table>
+  <h1 class="color_white">All Players</h1>
+    <div class="row">
+    <div class="col-12 grid-margin">
+      <div class="card storeprofile_page">
+        <div class="card-body tabwth_topbtn">
+          <div class="table-responsive bills_table_outer ">
+            <div id="tbl-doctors_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+              <div class="row"><div class="col-sm-12">
+                <table  class="table table-hover table_common shadow_box table-striped dataTable no-footer" data-turbolinks="false" role="grid" aria-describedby="tbl-doctors_info" style="width: 1100px;">
+                <thead>
+                    <tr role="row">
+                      <th>Game </th>
+                      <th>Player</th>
+                      <th>Email</th>
+                      <th>Player Level</th>
+                      <th>Update</th>
+                      <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for game, players in game_players.items %}
+                <tr role="row" class="odd">
+                  {% for player in players %}
+                  <tr>
+                    <td>{{ player.games }}</td>
+                    <td>{{ player.player.name }}</td>
+                    <td>{{ player.player.email }}</td>
+                  {% if player.first_completed %}
+                    <td>Winner</td>
+                  {% elif player.completed %}
+                    <td>Completed</td>
+                  {% else %}
+                    <td>{{ player.current_level }}</td>
+                  {% endif %}
+                    <td><a href="{% url 'edit_player' uid=player.player.uid %}"><img class="btn btn-edit" src="{% static 'image/edit.png' %}" ></a></td>
+                    <td><a href="{% url 'delete_player' uid=player.player.uid game_id=game.game_id %}"><img class="btn btn-remove" src="{% static 'image/remove.png' %}" ></a></td>
+                  </tr>
+                  {% endfor %}
+                  {% endfor %}
+                </tr>
+                </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
 </div>
 <style>
     .center {
-  margin: auto;
-  width: 50%;
-  padding: 40px;
+  margin-left: 100px;
+  margin-right: 200px;
+  width: auto;
+  padding: 10%;
 }
-table {
-  border-collapse: collapse;
-  width: 100%;
-  max-width: 800px;
-  margin: 20px auto;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-button {
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  padding: 8px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin: 4px 2px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button.Update {
-  background-color: #2196f3;
-}
-
-button.Delete {
-  background-color: #f44336;
-}
-
-button:hover {
-  background-color: #555;
-  color: #fff;
-}
-
 </style>
 {% endblock %}

@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {% load static %}
     <title>Treasurehunt.</title>
-    <link href="{% static 'dashboard/css/materialdesignicons.min.css' %}"
-          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{% static 'dashboard/css/vendor.bundle.base.css' %}"
           rel="stylesheet">
     <link href="{% static 'dashboard/css/style.css' %}" rel="stylesheet">
@@ -27,8 +26,10 @@
     <link rel="stylesheet"
           href="{% static 'dashboard/css/font-awesome/font-awesome.min.css' %}">
 
+
 </head>
-<body>
+<body style="background-image: url('{% static 'image/treasurehunt.jpg' %}');background-size: cover;">
+
 <!-- partial:partials/_sidebar.html -->
 <!-- Pre Loader Strat -->
 <div class='loadscreen' id="preloader">
@@ -41,7 +42,7 @@
             <div class="text-left navbar-brand-wrapper d-flex align-items-center justify-content-center"><a
                     class="navbar-brand brand-logo"
                     href="#"><img
-                    src="{% static 'image/logo.png' %}" alt="logo" class="ml-2 logo-img">Treasurehunt</a>
+                    src="{% static 'image/logo.png' %}" alt="logo" class="ml-2  px-2 logo-img" width="100" height="50">Treasurehunt</a>
                 <a class="navbar-brand brand-logo-mini"
                    href="#"><img
                         src="{% static 'image/logo.png' %}"
@@ -54,16 +55,6 @@
                 <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
                         data-toggle="offcanvas"><span class="mdi mdi-menu"></span>
                 </button>
-                <!-- <div class="sidebar-toggle-box">
-                <span class="toggle_menu"></span>
-                <span class="toggle_menu"></span>
-                <span class="toggle_menu"></span>
-                </div> -->
-                <!--logo end-->
-                <!-- <div class="top-nav "> -->
-                <!--search & user info start-->
-                <!-- <ul class="nav pull-right top-menu"> -->
-                <!-- user login dropdown start-->
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -144,9 +135,6 @@
     <div class="container-fluid page-body-wrapper">
         <aside>
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
-                <!-- <div id="sidebar" class="nav-collapse "> -->
-                <!-- sidebar menu start-->
-                <!-- <ul class="sidebar-menu" id="nav-accordion"> -->
                 <ul class="nav">
                     <!-- <li class=" null "> -->
                     <li class=" null nav-item">
@@ -156,44 +144,29 @@
                             <span class="pl-2 menu-title">Dashboard</span>
                         </a>
                     </li>
-                    <!-- <li class=" null "> -->
-<!--                    <li class=" null nav-item">-->
-<!--                        <a href="{% url 'game_create' %}"-->
-<!--                           class=" null nav-link">-->
-<!--                            <i class="fa fa-users"></i>-->
-<!--                            <span class="pl-2 menu-title">Create</span>-->
-<!--                        </a>-->
-<!--                    </li>-->
-                    <!-- <li class=" null "> -->
                     <li class=" null nav-item">
                         <a href="{% url 'player_details' %}"
                            class=" null nav-link">
-                            <i class="fa fa-wheelchair"></i>
+                            <i class="fa fa-users"></i>
                             <span class="pl-2 menu-title">Players</span>
                         </a>
                     </li>
                     <li class=" null nav-item">
                         <a href="{% url 'coordinator_game_detail' %}"
                            class=" null nav-link">
-                            <i class="fa fa-wheelchair"></i>
+                            <i class="fa fa-puzzle-piece"></i>
                             <span class="pl-2 menu-title">Games</span>
                         </a>
                     </li>
                     <!-- <li class=" null "> -->
-                    <li class=" null nav-item">
-                        <a href="{% url 'analytics' %}"
-                           class=" null nav-link">
-                            <i class="fa fa-user"></i>
-                            <span class="pl-2 menu-title">Analytics </span>
-                        </a>
-                    </li>
                 </ul>
                 <!-- </div> -->
             </nav>
         </aside>
         {% block content %}
         <div class="main-panel">
-            <div class="content-wrapper content-wrapper-inner">
+            <div  class="content-wrapper content-wrapper-inner">
+<!--                 <div style="background-color: rgba(150, 150, 150, 0.5); position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>-->
                 <div class="shop_area release-container">
                     <div class="container-fluid">
                         <div class="row">
@@ -220,43 +193,25 @@
                                                 </div>
                                             </span>
                                         </div>
-                                        <div class="point_cont text_semi_color">Total number of users
+                                        <div class="point_cont text_semi_color">Total number of players
                                             <span class="d-inline-block w-100">{{ total_players }}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="point_bottom">
-                            <div class="row reward_regional">
-                                {% for game, player_count in game_player_counts.items %}
-                                    <div class="col">
-                                        <div class="reward_point text_semi_color">{{ game }} players<span
-                                                class="d-inline-block w-100 text-dark">{{ player_count }}</span>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
+
                     </div>
 
                         <div class="row">
                             <div class="col-12 col-md-6 grid-margin">
                                 <div class="page-header mt-3">
-                                    <h3 class="page-title font-weight-medium"> Users Registrations </h3>
+                                    <h3 class="page-title font-weight-medium"> Players Joined </h3>
                                 </div>
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="table-responsive">
                                             <table class="table table-hover table_common shadow_box table-striped">
-
-                                                <!-- <thead> -->
-                                                <!-- <tr> -->
-                                                <!-- <th></th> -->
-                                                <!-- <th></th> -->
-                                                <!-- <th></th> -->
-                                                <!-- </tr> -->
-                                                <!-- </thead> -->
                                                 <tbody>
                                                 {% for i in players|slice:":4" %}
                                                 <tr
@@ -272,7 +227,7 @@
                                                                 <span>User Id : <a
                                                                         href="#">{{ i.uid }}</a>
                                                                  </span>
-                                                                <span>{{ i.register_as }}</span>
+<!--                                                                <span>{{ i.register_as }}</span>-->
                                                             </div>
                                                         </div>
                                                     </td>
@@ -315,7 +270,7 @@
                                                         </div>
 
                                                     </td>
-                                                    <td><span class="verification">Quote -Approved
+                                                    <td><span class="verification">Approved
                                                         </span>
                                                     </td>
                                                     <td class="time_date_table">
@@ -344,12 +299,7 @@
     </div>
 </div>
 
-<style>
-   .logo-img {
-        height: 60px;
-        width: auto;
-    }
-</style>
+
 <script src="{% static 'dashboard/js/vendor.bundle.base.js' %}"></script>
 <script src="{% static 'dashboard/js/off-canvas.js' %}"></script>
 <script src="{% static 'dashboard/js/hoverable-collapse.js' %}"></script>

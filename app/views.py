@@ -1,64 +1,47 @@
-from django.shortcuts import render,redirect,get_object_or_404
-from django.http import HttpResponse,JsonResponse
-from django.contrib.auth import authenticate, login, logout, get_user_model
-from django.contrib.auth.hashers import make_password, check_password
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib.auth import login, logout
+from django.contrib.auth.hashers import check_password
 from .models import User, Game, Level, Game_login
-from .forms import EditplayerForm, EditProfileForm, EditgameForm,EditlevelForm,ViewgameForm
-from .decorator import login_required
+from .forms import EditplayerForm, EditProfileForm, EditgameForm
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
-
-
-
 # Create your views here.
 
 def home(request):
-    return render(request,'login.html')
+    return render(request, 'login.html')
 def register(request):
     if request.method == 'POST':
         name = request.POST['name']
         email = request.POST['email']
-        print('email:', email)
         register_as = request.POST['register_as']
-        print('register_as:', register_as)
         phonecode = request.POST['phonecode']
         phone = request.POST['phone']
         password = request.POST['password']
-        print('password:', password)
         if register_as == '1': #coordinator
             user = User.objects.create(name=name, email=email, register_as=register_as, password=password, phonecode=phonecode, phone=phone,)
             user.save()
-            # game = Game.objects.create(creater_id=user.uid)
-            # game.save()
         elif register_as == '2': #player
-            # game_id = request.POST['game_id']
-            # game = Game.objects.get(game_id=game_id)
             user = User.objects.create(name=name, email=email, register_as=register_as, password=password, phonecode=phonecode, phone=phone,)
             user.save()
-            print('user:', user)
         return redirect(register_sucess)
 
 
 def register_sucess(request):
-    return render(request,'register_sucess.html')
+    return render(request, 'register_sucess.html')
 
 def my_login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-        print(email)
         password = request.POST.get('password')
-        print(password)
-        # register_as = request.POST.get('register_as')
         if email and password:
-            # User = get_user_model()
             try:
                 user = User.objects.get(email=email, password=password)
                 if check_password(password, user.password):
                     # user = authenticate(request, email=email, password=password)
                     # user = User.objects.get(email=email)
                     print(user)
-                # if check_password(password, user.password):
                 if user is not None:
                     register_as = user.register_as
                     if user.register_as == 2 and int(register_as) == 2:   #player
@@ -101,7 +84,6 @@ def change_password(request):
             return HttpResponse("Passwords don't match")
         # Retrieve the user object based on email
         user = User.objects.filter(email=email).first()
-        print(user)
         if user is not None:
             # Hash the new password and update the user object
             user.password = new_password
@@ -128,12 +110,18 @@ def player_dashboard(request):
     if 'uid' in request.session:
         id = request.session['uid']
         user = User.objects.get(uid=id)
-        game_joined  = Game_login.objects.filter(player=user).first()
-        if game_joined :
-            current_level = game_joined.current_level
-            print(current_level)
-            level = Level.objects.filter(game=game_joined.games, game_level=current_level).first()
-            context = {'game': game_joined, 'user': user, 'level': level}
+        game_joined = Game_login.objects.filter(player=user).first()
+        if game_joined:
+            game = game_joined.games
+            game_logins = Game_login.objects.filter(games=game)
+            level = Level.objects.filter(game=game, game_level=game_joined.current_level).first()
+            current_levels = []
+            is_completed = Game_login and Game_login.objects.filter(player=user,games=game_joined.games, completed=True)
+            is_winner = Game_login and Game_login.objects.filter(player=user,games=game_joined.games, first_completed=True)
+            for login in game_logins:
+                current_level = Level.objects.filter(game=game, game_level=login.current_level).first()
+                current_levels.append(current_level)
+            context = {'game': game_joined, 'user': user, 'current_levels': current_levels, 'is_winner': is_winner, 'level': level, 'game_logins': game_logins, 'is_completed': is_completed}
             return render(request, 'player-dashboard/app.html', context)
         else:
             return redirect('player_home')
@@ -145,36 +133,16 @@ def coordinator_dashboard(request):
         user = User.objects.get(uid=id)
         games = user.games_created.all()
         players = User.objects.filter(game_login__games__in=games)
-        print(players)
         total_players = players.count()
         game_player_counts = {}
         for game in games:
             game_player_counts[game.game_name] = game.players.count()
-        # context = {'players': players, 'games': games, 'user': user}
-        # return render(request, 'coordinator-dashboard/app.html', context)
-        # print(games)
-        # # Get all players in these games
-        # players = []
-        # for game in games:
-        #     print(game)
-        #     players.extend(game.players.all())
-        # print(players)
+
         context = {'players': players, 'games': games, 'user': user, 'total_players': total_players, 'game_player_counts': game_player_counts}
     # except Game.DoesNotExist:
-    #     context = {'players': None, 'game': None, 'user': user}
         return render(request, 'coordinator-dashboard/app.html', context)
     else:
         return HttpResponse("You are not logged in.")
-
-def send_test_email(request):
-    send_mail(
-        'Test email',
-        'This is a test email.',
-        settings.EMAIL_HOST_USER,
-        ['sajayjose24@gmail.com'],
-        fail_silently=False,
-    )
-    return HttpResponse('Email sent successfully.')
 
 
 
@@ -191,7 +159,6 @@ def password_reset(request):
         print(token)
 
         # Refresh the user instance to get the updated token value from the database
-        # user.refresh_from_db()
         context = {
             'uid': user.uid,
             'email': user.email,
@@ -221,7 +188,6 @@ def password(request, uid=None, token=None):
         # Authenticate the user with the current password
         user = User.objects.filter(email=email).first()
         if user is not None:
-            # Hash the new password and update the user object
             user.password = new_password
             user.save()
             # Redirect the user to the login page
@@ -254,24 +220,18 @@ def password(request, uid=None, token=None):
             return HttpResponse("User not found")
 
 
-
-
-
-
 def player_home(request):
     if 'uid' in request.session:
         id = request.session['uid']
         user = User.objects.get(uid=id)
         if request.method == 'POST':
             game_id = request.POST['game_id']
-            game = Game.objects.filter(game_id=game_id).first()
+            game = Game.objects.get(game_id=game_id)
             if game:
                 game_join = Game_login.objects.create(games=game, player=user, current_level=1)
                 game_join.save()
-                level = Level.objects.filter(game=game_join.games, ).first()
+                level = Level.objects.filter(game=game_join.games).first()
                 return redirect(player_dashboard)
-                # context = {'game': game_join, 'user': user, 'level': level}
-                # return render(request, 'player-dashboard/app.html', context)
             else:
                 messages.success(request, "can't find any game with this id.")
                 return redirect(player_home)
@@ -284,33 +244,37 @@ def check_answer(request,id):
         uid = request.session['uid']
         user = User.objects.get(uid=uid)
         game_joined = Game_login.objects.get(player=user)
-        print(game_joined)
         level_count = Level.objects.filter(game=game_joined.games).count()
-        print(level_count)
         level = Level.objects.get(game=game_joined.games, id=id)
-        print(level)
-        print(level.game_level)
         game_level = level.game_level
         if request.method == 'POST':
             answer = request.POST['answer']
-            # Answer = Level.objects.filter(answer=answer)
             if answer == level.answer:
-                # request.session['current_level'] = level.id
-                # print(level.id)
                 # move to the next level
                 next_level = game_level + 1
-                # print(next_level)
                 if next_level <= level_count:
                     game_joined.current_level = next_level
                     game_joined.save()
-                    print(game_joined.current_level)
-                    # level.game_level = next_level
                     messages.success(request, 'Congratulations! You have moved to the next level.')
                     return redirect('player_dashboard')
                 else:
-                    messages.success(request, 'Congratulations! You have completed the game.')
+                    # All levels completed
+                    game_joined.completed = True
+                    game_joined.save()
+                    # Check if this player is the first to complete the game
+                    has_winner = Game_login and Game_login.objects.filter(games=game_joined.games,first_completed=True)
+                    if has_winner and not game_joined.first_completed:
+                        # This player is the first to complete all levels
+                        game_joined.first_completed = False
+                        game_joined.save()
+                        messages.success(request, 'Congratulations! You have completed all levels.')
+                    else:
+                        game_joined.first_completed = True
+                        game_joined.save()
+                        messages.success(request, 'Congratulations! You have completed all levels and you are the winner!')
+
                     context = {'game': game_joined, 'user': user}
-                    return render(request, 'player-dashboard/app.html',context)
+                    return render(request, 'player-dashboard/app.html', context)
             else:
                 messages.error(request, 'Incorrect answer. Please try again.')
                 return redirect('check_answer', id)
@@ -339,21 +303,12 @@ def player_game_details(request):
 def player_details(request):
     if 'uid' in request.session:
         id = request.session['uid']
-
         user = User.objects.get(uid=id)
-
-        # games = Game.objects.filter(creater_id=user.uid)
         games = user.games_created.all()
-        print(games)
         game_players = {}
         for game in games:
-            print(game)
-            # players = Game_login.objects.filter(game=game.game_name)
-            # players = User.objects.filter(game_login__games__in=game)
             players = Game_login.objects.filter(games=game)
-            print(players)
             game_players[game] = players
-            print(game_players)
         context = {'game_players': game_players, 'games': games, 'user': user}
         return render(request, 'coordinator-dashboard/player_details.html', context)
     else:
@@ -364,7 +319,6 @@ def game_create(request):
     if 'uid' in request.session:
         id = request.session['uid']
         user = User.objects.get(uid=id)
-        users = User.objects.all()
         if request.method == 'POST':
             game_name = request.POST.get('game_name')
             game_id = request.POST.get('game_id')
@@ -390,15 +344,8 @@ def coordinator_game_detail(request):
     if 'uid' in request.session:
         id = request.session['uid']
         user = User.objects.get(uid=id)
-        # game = Game.objects.get(game_email=email)
-        # # games = Game.objects.filter(coordinator=user).all()
-        # games = Game.objects.filter(game_email=email)
-        # context = {'games': games , 'game': game, 'user': user}
-        # return render(request, 'coordinator-dashboard/coordinator_game_detail.html', context)
         try:
             games = Game.objects.filter(creater=user)
-            # game = user.games_created.all()
-            # games = Level.objects.filter(id=id)
             context = {'games': games, 'user': user}
         except Game.DoesNotExist:
             context = {'game': None, 'user': user}
@@ -426,10 +373,8 @@ def delete_player(request,uid,game_id):
     player = User.objects.get(uid=uid)
     game_login = Game_login.objects.get(games=game, player=player)
     game_login.delete()
-
     player.delete()
     return redirect('player_details')
-
 
 def edit_game(request,id):
     uid = request.session['uid']
@@ -448,13 +393,11 @@ def view_game(request, id):
     uid = request.session['uid']
     user = User.objects.get(uid=uid)
     game = Game.objects.get(pk=id)
-    print(id)
     if Level.objects.filter(game=game).exists():
         levels = Level.objects.filter(game=game)
         context = {'game': game, 'levels': levels, 'user': user}
         return render(request, 'coordinator-dashboard/view_game.html', context)
     else:
-        # return redirect('create_level', id=id)
         context = {'game': game, 'user': user}
         return render(request, 'coordinator-dashboard/view_game.html', context)
 
@@ -468,29 +411,20 @@ def create_level(request,id):
         uid = request.session['uid']
         user = User.objects.get(uid=uid)
         game = Game.objects.get(pk=id)
-        # form = EditlevelForm(instance=game)
-        # if request.method == 'POST':
-        #     form = EditlevelForm(request.POST, instance=game)
-        #     if form.is_valid():
-        #         form.cleaned_data['password_result'] = 'password_result'
-        #         form.save()
-        #         return redirect('coordinator_game_detail')
 
         if request.method == 'POST':
             game_level = request.POST['game_level']
-            password = request.POST['password']
+            question = request.POST['question']
             answer = request.POST['answer']
             clues = request.POST['clues']
             level = Level.objects.create(
                 game=game,
                 game_level=game_level,
-                password=password,
+                question=question,
                 answer=answer,
                 clues=clues
             )
             level.save()
-            # context = {'level': level}
-            # return render(request, 'coordinator-dashboard/view_game.html', context)
             return redirect('view_game', id=id)
         else:
             context = {'game': game, 'user': user}
@@ -502,8 +436,9 @@ def edit_level(request,id):
         user = User.objects.get(uid=uid)
         level = Level.objects.get(pk=id)
         print(id)
+
         if request.method == 'POST':
-            level.password = request.POST['password']
+            level.question = request.POST['question']
             level.answer = request.POST['answer']
             level.clues = request.POST['clues']
             level.save()

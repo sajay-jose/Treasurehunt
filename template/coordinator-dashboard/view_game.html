@@ -1,98 +1,64 @@
 {% extends 'coordinator-dashboard/app.html' %}
 
 {% block content %}
+{% load static %}
 <div class="center">
-     <button><a href="{% url 'create_level' id=game.pk %}">Create Level</a></button>
-<!--    <div>-->
-<!--        <form method="POST" action="{% url 'view_game' id=game.id %}">-->
-<!--            {% csrf_token %}-->
-<!--&lt;!&ndash;            {{ form.as_p }}&ndash;&gt;-->
-<!--&lt;!&ndash;            <button type="submit">Save</button>&ndash;&gt;-->
-<!--        </form>-->
-
-<!--    </div>-->
-<!--</div>-->
-<!--<style>-->
-<!--    .center {-->
-<!--  margin: auto;-->
-<!--  width: 50%;-->
-<!--  padding: 40px;-->
-<!--}-->
-<!--</style>-->
-    <h1>Game Details</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Game Level</th>
-        <th>password</th>
-        <th>answer</th>
-        <th>Clues</th>
-        <th>Update</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for i in levels %}
-        <tr>
-          <td>{{ i.game_level }}</td>
-          <td>{{ i.password }}</td>
-          <td>{{ i.answer }}</td>
-          <td>{{ i.clues }}</td>
-          <td><button><a href="{% url 'edit_level' id=i.id %}">Update</a></button></td>
-          <td><button><a href="{% url 'delete_level' id=game.pk level_id=i.id %}">Delete</a></button></td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <button class="create"><a class="create" href="{% url 'create_level' id=game.pk %}">Create Level</a></button>
+  <h1 class="color_white">Game Details</h1>
+      <div class="row">
+    <div class="col-12 grid-margin">
+      <div class="card storeprofile_page">
+        <div class="card-body tabwth_topbtn">
+          <div class="table-responsive bills_table_outer ">
+            <div id="tbl-doctors_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+              <div class="row"><div class="col-sm-12">
+                <table  class="table table-hover table_common shadow_box table-striped dataTable no-footer" data-turbolinks="false" role="grid" aria-describedby="tbl-doctors_info" style="width: 1100px;">
+                <thead>
+                    <tr role="row">
+                      <th>Game Level</th>
+                      <th>Question</th>
+                      <th>Answer</th>
+                      <th>Clues</th>
+                      <th>Update</th>
+                      <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for i in levels %}
+                <tr role="row" class="odd">
+                  <tr>
+                    <td>{{ i.game_level }}</td>
+                    <td>{{ i.question }}</td>
+                    <td>{{ i.answer }}</td>
+                    <td>{{ i.clues }}</td>
+                    <td><a href="{% url 'edit_level' id=i.id %}"><img class="btn btn-edit" src="{% static 'image/edit.png' %}" ></a></td>
+                    <td><a href="{% url 'delete_level' id=game.pk level_id=i.id %}"><img class="btn btn-remove" src="{% static 'image/remove.png' %}" ></a></td>
+                  </tr>
+                {% endfor %}
+                </tr>
+                </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <style>
     .center {
-  margin: auto;
-  width: 50%;
-  padding: 40px;
+  margin-left: 100px;
+  margin-right: 200px;
+  width: auto;
+  padding: 10%;
 }
-table {
-  border-collapse: collapse;
-  width: 100%;
-  max-width: 800px;
-  margin: 20px auto;
+button.create {
+  background-color: #212529;
+  float: right;
 }
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-button {
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  padding: 8px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin: 4px 2px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button.Update {
-  background-color: #2196f3;
-}
-
-button.Delete {
-  background-color: #f44336;
-}
-
-button:hover {
-  background-color: #555;
-  color: #fff;
+a.create {
+  color: white;
 }
 
 </style>

@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="center">
- <h2>Game Details</h2>
+ <h2>Go To The Next Level</h2>
     {% if level.id %}
     <form method="post" action="{% url 'check_answer' id=level.id %}">
     {% endif %}
@@ -11,6 +11,9 @@
     <label for="answer">Answer:</label>
     <input type="text" id="answer" name="answer"><br><br>
     <button type="submit">Submit</button>
+        <a href="../player-dashboard">
+       <button type="button" ><i class="fa fa-arrow-left" aria-hidden="true"></i>
+Go back</button></a>
     </form>
     {% if messages %}
     <ul class="messages">
