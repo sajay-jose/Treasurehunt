@@ -18,9 +18,13 @@
 </head>
 <body>
  {% block content %}
-<header class="header_desktop">
+
+
+<section class="banner_section">
+    <div class="banner_caption">
+<!--        <header class="header_desktop">-->
     <div class="main_header">
-        <nav class="navbar navbar-expand-xl">
+        <nav class="navbar navbar-expand-xl" >
             <div class="container"><a class="navbar-brand me-0 " href="login"> <img
                     src="{% static 'image/logo.png' %}" alt="logo" class="logo-img  px-2">Treasurehunt</a>
 
@@ -49,11 +53,8 @@
             </div>
         </nav>
     </div>
-</header>
+<!--</header>-->
 
-
-<section class="banner_section">
-    <div class="banner_caption">
         <div class="container">
             <div class="row ">
                 <div class="col-md-7 banner_left">
@@ -504,7 +505,9 @@
                     <p>"Welcome to Treasurehunt, the ultimate destination for treasure hunting enthusiasts! Join us on
                         an exciting journey as we lead you through a maze of clues and puzzles in the hunt for valuable
                         treasures. Whether you're a seasoned pro or a first-time player, ClueCrusaders offers a fun and
-                        challenging experience for all. So grab your compass, sharpen your wits, and let's begin the hunt!"</p>
+                        challenging experience for all. So grab your compass, sharpen your wits, and let's begin the hunt!"
+                    </p>
+                    <img  style="height:50%; width:500px;" src="{% static 'image/treasure-animate.svg' %}">
                 </div>
                 <div class="col-md-3">
                     <h4>Address</h4>

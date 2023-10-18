@@ -1,13 +1,13 @@
 @import url("stylesheet.css");
 body{font-size:14px; margin:0; padding:0; font-family: 'Helvetica';}
 a, button{-webkit-transition: all 0.3s ease-in-out;-moz-transition: all 0.3s ease-in-out;-ms-transition: all 0.3s ease-in-out;-o-transition: all 0.3s ease-in-out;transition: all 0.3s ease-in-out;}
-header{background: #fff;padding:15px 0}
+header{background: powderblue;padding:15px 0}
 header .navbar{padding:0}
 .ul_reset{padding:0; margin:0; list-style-type:none}
-.btn-primary {color: #fff;background-color: #149BD7 !important;border:1px solid #149BD7 !important;border-radius: 50px; padding:8px 30px;font-family: 'Helvetica-Bold';font-size:14px;}
+.btn-primary {color: #fff;background-color: #000000 !important;border:1px solid #149BD7 !important;border-radius: 50px; padding:8px 30px;font-family: 'Helvetica-Bold';font-size:14px;}
 .btn-primary:hover{background:none !important;color:#036894;}
-.btn-primary-border{border:1px solid #149BD7 !important;border-radius: 50px; padding:8px 30px;font-family: 'Helvetica-Bold';font-size:14px; color:#036894;}
-.btn-primary-border:hover{background:#149BD7;color:#fff}
+.btn-primary-border{border:1px solid #149BD7 !important;border-radius: 50px; padding:8px 30px;font-family: 'Helvetica-Bold';font-size:14px; color:#000000;}
+.btn-primary-border:hover{background:#000000;color:#fff}
 header button{width:120px}
 .covid {position: fixed;bottom: 0;z-index: 999;height: 55px;background: #0f1724;width: 100%;text-align: center;box-shadow: 0px -1px 5px 4px rgb(0 0 0 / 5%);-webkit-box-shadow: 0px -1px 5px 4px rgb(0 0 0 / 5%);-moz-box-shadow: 0px -1px 5px 4px rgba(0,0,0,0.05);color: #fff;
 font-size: 14px;font-weight: 400; line-height:55px;}

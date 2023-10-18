@@ -18,7 +18,12 @@ $(document).ready(function($) {
     function isScrolledIntoView(elem){
         var docViewTop = $(window).scrollTop();
         var docViewBottom = docViewTop + $(window).height();
-        var elemTop = $(elem).offset().top;
+//        var elemTop = $(elem).offset().top;
+        console.log('high')
+        var elem = document.querySelector('.element');
+        var rect = elem.getBoundingClientRect();
+        var elemTop = rect.top + window.scrollY;
+
         var elemBottom = elemTop + $(elem).height();
         return ((elemBottom <= docViewBottom));
     }

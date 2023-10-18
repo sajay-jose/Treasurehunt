@@ -1,8 +1,8 @@
 {% extends 'player-dashboard/app.html' %}
+{% load static %}
 {% block content %}
-<div class="center" >
-    <h2>Join a Game</h2>
-    <form method="POST" action="player_home" style="padding:50px;">
+<div class="center" style="display: flex; justify-content: space-between;">
+    <form method="POST" action="player_home" style="padding: 50px; flex: 1;">
         {% csrf_token %}
         <input type="text" value="{{id}}" name="id" hidden>
         <label for="game_id">Game ID:</label>
@@ -14,13 +14,15 @@
         {% endfor %}
         </ul>
         {% endif %}
-      <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-primary">Join</button>
     </form>
+    <img src="{% static 'image/join_game.svg' %}" style="flex: 1;">
 </div>
+
 <style>
 .center {
   margin: 80px;
-  width: 70%;
+  width: 90%;
   padding: 80px;
   border-radius: 5px;
   background-color: #f2f2f2;
@@ -48,6 +50,10 @@ input[type=submit] {
 
 input[type=submit]:hover {
   background-color: #45a049;
+}
+img{
+    width:50%;
+    height:50%;
 }
 
 </style>

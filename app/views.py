@@ -7,6 +7,7 @@ from .forms import EditplayerForm, EditProfileForm, EditgameForm
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def home(request):
@@ -105,7 +106,9 @@ def edit_profile(request):
         else:
             form = EditProfileForm(instance=user)
             return render(request, 'edit_profile.html', {'form': form, 'user':user})
-
+    else:
+        return redirect(my_login)
+# @login_required(login_url='login')
 def player_dashboard(request):
     if 'uid' in request.session:
         id = request.session['uid']
@@ -126,7 +129,8 @@ def player_dashboard(request):
         else:
             return redirect('player_home')
     else:
-        return HttpResponse("You are not logged in.")
+        return redirect(my_login)
+# @login_required(login_url='login')
 def coordinator_dashboard(request):
     if 'uid' in request.session:
         id = request.session['uid']
@@ -142,7 +146,7 @@ def coordinator_dashboard(request):
     # except Game.DoesNotExist:
         return render(request, 'coordinator-dashboard/app.html', context)
     else:
-        return HttpResponse("You are not logged in.")
+        return redirect(my_login)
 
 
 
@@ -219,7 +223,7 @@ def password(request, uid=None, token=None):
             # Return an error message if user is not found
             return HttpResponse("User not found")
 
-
+# @login_required(login_url='login')
 def player_home(request):
     if 'uid' in request.session:
         id = request.session['uid']
@@ -238,7 +242,8 @@ def player_home(request):
         else:
             context = {'user': user}
             return render(request, 'player-dashboard/home.html', context)
-
+    else:
+        return redirect(my_login)
 def check_answer(request,id):
     if 'uid' in request.session:
         uid = request.session['uid']
@@ -271,8 +276,8 @@ def check_answer(request,id):
                     else:
                         game_joined.first_completed = True
                         game_joined.save()
-                        messages.success(request, 'Congratulations! You have completed all levels and you are the winner!')
-
+                        # messages.success(request, 'Congratulations! You have completed all levels and you are the winner!')
+                        return render(request, 'player-dashboard/winner.html')
                     context = {'game': game_joined, 'user': user}
                     return render(request, 'player-dashboard/app.html', context)
             else:
@@ -281,7 +286,8 @@ def check_answer(request,id):
         else:
             context = {'game_login': game_login, 'level': level, 'user': user}
             return render(request, 'player-dashboard/check_answer.html', context)
-
+    else:
+        return redirect(my_login)
 def game_login(request):
     id = request.session['uid']
     user = User.objects.get(uid=id)
@@ -291,7 +297,7 @@ def game_login(request):
         game = Game.objects.get(game_id=game_id)
         context = {'game': game, 'user': user}
         return render(request, 'player-dashboard/app.html', context)
-
+# @login_required(login_url='login')
 def player_game_details(request):
     id = request.session['uid']
     user = User.objects.get(uid=id)
@@ -299,7 +305,7 @@ def player_game_details(request):
     context = {'user': user}
     return render(request, 'player-dashboard/check_answer.html', context)
 
-
+# @login_required(login_url='login')
 def player_details(request):
     if 'uid' in request.session:
         id = request.session['uid']
@@ -313,8 +319,9 @@ def player_details(request):
         return render(request, 'coordinator-dashboard/player_details.html', context)
     else:
         messages.error(request, 'You are not logged in')
-        return redirect('logout')
+        return redirect(login)
 
+# @login_required(login_url='login')
 def game_create(request):
     if 'uid' in request.session:
         id = request.session['uid']
@@ -339,7 +346,8 @@ def game_create(request):
         context = {'user': user, 'games': games}
         return render(request, 'coordinator-dashboard/game_create.html', context)
     else:
-        return HttpResponse("You are not logged in.")
+        return redirect(my_login)
+# @login_required(login_url='login')
 def coordinator_game_detail(request):
     if 'uid' in request.session:
         id = request.session['uid']
@@ -351,9 +359,9 @@ def coordinator_game_detail(request):
             context = {'game': None, 'user': user}
         return render(request, 'coordinator-dashboard/coordinator_game_detail.html', context)
     else:
-        return HttpResponse("You are not logged in.")
+        return redirect(my_login)
 
-
+# @login_required(login_url='login')
 def edit_player(request,uid):
     if 'uid' in request.session:
         id = request.session['uid']
@@ -367,7 +375,9 @@ def edit_player(request,uid):
                 return redirect('player_details')
         context = {'form': form, 'player': player, 'user': user}
         return render(request, 'coordinator-dashboard/edit_player.html', context)
-
+    else:
+        return redirect(my_login)
+# @login_required(login_url='login')
 def delete_player(request,uid,game_id):
     game = Game.objects.get(game_id=game_id)
     player = User.objects.get(uid=uid)
@@ -376,6 +386,7 @@ def delete_player(request,uid,game_id):
     player.delete()
     return redirect('player_details')
 
+# @login_required(login_url='login')
 def edit_game(request,id):
     uid = request.session['uid']
     user = User.objects.get(uid=uid)
@@ -389,6 +400,7 @@ def edit_game(request,id):
     context = {'form': form, 'game': game, 'user': user}
     return render(request, 'coordinator-dashboard/edit_game.html', context)
 
+# @login_required(login_url='login')
 def view_game(request, id):
     uid = request.session['uid']
     user = User.objects.get(uid=uid)
@@ -429,7 +441,8 @@ def create_level(request,id):
         else:
             context = {'game': game, 'user': user}
             return render(request, 'coordinator-dashboard/create_level.html', context)
-
+    else:
+        return redirect(my_login)
 def edit_level(request,id):
     if 'uid' in request.session:
         uid = request.session['uid']
@@ -446,9 +459,14 @@ def edit_level(request,id):
         else:
             context = {'level': level, 'user': user}
             return render(request, 'coordinator-dashboard/edit_level.html', context)
+    else:
+        return redirect(my_login)
 
 def delete_level(request,id,level_id):
     game = Game.objects.get(pk=id)
     level = Level.objects.get(id=level_id)
     level.delete()
     return redirect('view_game', id=id)
+
+def winners(request):
+    return render(request, 'player-dashboard/winner.html')

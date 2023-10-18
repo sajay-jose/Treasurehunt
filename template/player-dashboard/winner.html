@@ -1,0 +1,18 @@
+{% extends 'player-dashboard/app.html' %}
+{% load static %}
+{% block content %}
+<style>
+	.winner{
+	 text-align: center;
+	 margin-top:100px;
+	}
+	img{
+		height:100%;
+		width:35%;
+	}
+</style>
+<div class="winner">
+	<img src="{% static 'image/winners-animate.svg' %}"><br>
+	<a href="../player-dashboard"><button type="button" class="btn btn-primary">Go Back</button></a>
+</div>
+{% endblock %}

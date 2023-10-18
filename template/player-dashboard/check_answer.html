@@ -1,33 +1,60 @@
 {% extends 'player-dashboard/app.html' %}
-
-
+{% load static %}
 {% block content %}
-<div class="center">
- <h2>Go To The Next Level</h2>
-    {% if level.id %}
-    <form method="post" action="{% url 'check_answer' id=level.id %}">
-    {% endif %}
-    {% csrf_token %}
-    <label for="answer">Answer:</label>
-    <input type="text" id="answer" name="answer"><br><br>
-    <button type="submit">Submit</button>
+<!--<div class="center">-->
+<!-- <h2>Go To The Next Level</h2>-->
+<!--    {% if level.id %}-->
+<!--    <form method="post" action="{% url 'check_answer' id=level.id %}">-->
+<!--    {% endif %}-->
+<!--    {% csrf_token %}-->
+<!--    <label for="answer">Answer:</label>-->
+<!--    <input type="text" id="answer" name="answer"><br><br>-->
+<!--    <button type="submit">Submit</button>-->
+<!--        <a href="../player-dashboard">-->
+<!--       <button type="button" ><i class="fa fa-arrow-left" aria-hidden="true"></i>-->
+<!--Go back</button></a>-->
+<!--    </form>-->
+<!--    {% if messages %}-->
+<!--    <ul class="messages">-->
+<!--    {% for message in messages %}-->
+<!--    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>-->
+<!--    {% endfor %}-->
+<!--    </ul>-->
+<!--    {% endif %}-->
+<!--     <img src="{% static 'image/next-steps-animate.svg' %}" style="flex: 1;">-->
+
+<!--</div>-->
+<div class="center" style="display: flex; align-items: center; ">
+    <form method="post" action="{% url 'check_answer' id=level.id %}" style="flex: 1; padding: 100px; ">
+        {% csrf_token %}
+        <label for="answer">Answer:</label>
+        <input type="text" id="answer" name="answer"><br><br>
+        <button type="submit" class="btn btn-primary" >Submit</button>
         <a href="../player-dashboard">
-       <button type="button" ><i class="fa fa-arrow-left" aria-hidden="true"></i>
-Go back</button></a>
+            <button type="button" class="btn btn-primary"><i class="fa fa-arrow-left" aria-hidden="true"></i> Go back</button>
+<!--            <button type="submit" class="btn btn-primary" >Join</button>-->
+        </a>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </form>
-    {% if messages %}
-    <ul class="messages">
-    {% for message in messages %}
-    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-    </ul>
-    {% endif %}
+    <img src="{% static 'image/next-steps-animate.svg' %}" style="flex: 1;">
 </div>
+
 <style>
     .center {
   margin: auto;
   width: 50%;
   padding: 80px;
+}
+form {
+    border: 1px solid black;
+    position: absolute;
+    margin-right: 50px;
 }
 </style>
 {% endblock %}

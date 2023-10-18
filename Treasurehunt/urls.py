@@ -20,7 +20,7 @@ from app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.home),
+    path('', views.home),
     path('register',views.register),
     path('register_success', views.register_sucess),
     path('login',views.my_login, name='login'),
@@ -45,5 +45,6 @@ urlpatterns = [
     path('delete_game/int:<id>', views.delete_game, name='delete_game'),
     path('game_login', views.game_login),
     path('edit_level/int:<id>',views.edit_level, name='edit_level'),
-    path('delete_level/<int:id>/<int:level_id>', views.delete_level, name='delete_level')
+    path('delete_level/<int:id>/<int:level_id>', views.delete_level, name='delete_level'),
+    path('winners', views.winners)
 ]
