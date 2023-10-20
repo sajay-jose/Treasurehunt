@@ -1,7 +1,7 @@
 {% extends 'coordinator-dashboard/app.html' %}
 
 {% block content %}
-  <div class="center">
+
     <form method="post" action="game_create">
       {% csrf_token %}
       <label for="game_name">Game Name:</label>
@@ -16,11 +16,11 @@
       <label for="start_date">Start Date:</label>
       <input type="date" id="start_date" name="start_date"><br><br>
 
-      <button type="submit">Create Game</button>
-      <a href="../coordinator_game_detail"><button type="button" ><i class="fa fa-arrow-left" aria-hidden="true"></i>Go back</button></a>
+      <button type="submit" class="btn btn-primary">Create Game</button>
+      <a href="../coordinator_game_detail"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left" aria-hidden="true"></i>Go back</button></a>
 
     </form>
-  </div>
+
 <style>
     .center {
   margin: auto;
@@ -55,6 +55,9 @@ input[type=submit]:hover {
   background-color: #45a049;
 }
 
+form {
+  margin: 10rem 0rem 0rem 35rem;
+}
 
 </style>
 {% endblock %}

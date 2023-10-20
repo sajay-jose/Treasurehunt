@@ -4,40 +4,42 @@
 {% load static %}
 <div class="center">
   <button class="create"><a class="create" href="{% url 'create_level' id=game.pk %}">Create Level</a></button>
-  <h1 class="color_white">Game Details</h1>
-      <div class="row">
+    <h1 class="color_white">Game Details</h1>
+  <div class="row">
     <div class="col-12 grid-margin">
       <div class="card storeprofile_page">
         <div class="card-body tabwth_topbtn">
           <div class="table-responsive bills_table_outer ">
             <div id="tbl-doctors_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-              <div class="row"><div class="col-sm-12">
-                <table  class="table table-hover table_common shadow_box table-striped dataTable no-footer" data-turbolinks="false" role="grid" aria-describedby="tbl-doctors_info" style="width: 1100px;">
-                <thead>
-                    <tr role="row">
-                      <th>Game Level</th>
-                      <th>Question</th>
-                      <th>Answer</th>
-                      <th>Clues</th>
-                      <th>Update</th>
-                      <th>Delete</th>
+              <div class="row">
+                <div class="col-sm-12">
+                  <table  class="table table-hover table_common shadow_box table-striped dataTable no-footer" data-turbolinks="false" role="grid" aria-describedby="tbl-doctors_info" style="width: 1100px;">
+                  <thead>
+                      <tr role="row">
+                        <th>Game Level</th>
+                        <th>Question</th>
+                        <th>Answer</th>
+                        <th>Clues</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                  {% for i in levels %}
+                  <tr role="row" class="odd">
+                    <tr>
+                      <td>{{ i.game_level }}</td>
+                      <td>{{ i.question }}</td>
+                      <td>{{ i.answer }}</td>
+                      <td>{{ i.clues }}</td>
+                      <td><a href="{% url 'edit_level' id=i.id %}"><img class="btn btn-edit" src="{% static 'image/edit.png' %}" ></a></td>
+                      <td><a href="{% url 'delete_level' id=game.pk level_id=i.id %}"><img class="btn btn-remove" src="{% static 'image/remove.png' %}" ></a></td>
                     </tr>
-                </thead>
-                <tbody>
-                {% for i in levels %}
-                <tr role="row" class="odd">
-                  <tr>
-                    <td>{{ i.game_level }}</td>
-                    <td>{{ i.question }}</td>
-                    <td>{{ i.answer }}</td>
-                    <td>{{ i.clues }}</td>
-                    <td><a href="{% url 'edit_level' id=i.id %}"><img class="btn btn-edit" src="{% static 'image/edit.png' %}" ></a></td>
-                    <td><a href="{% url 'delete_level' id=game.pk level_id=i.id %}"><img class="btn btn-remove" src="{% static 'image/remove.png' %}" ></a></td>
+                  {% endfor %}
                   </tr>
-                {% endfor %}
-                </tr>
-                </tbody>
-                </table>
+                  </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

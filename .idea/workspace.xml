@@ -2,18 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1b3332e7-7bdd-4b39-9d39-9c0132bc1486" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/Treasurehunt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Treasurehunt.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Treasurehunt/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Treasurehunt/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/common_js.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/common_js.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/coordinator-dashboard/coordinator_game_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/coordinator-dashboard/coordinator_game_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/coordinator-dashboard/create_level.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/coordinator-dashboard/create_level.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/player-dashboard/check_answer.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/player-dashboard/check_answer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/player-dashboard/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/player-dashboard/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/dashboard/css/dataTables.bootstrap4.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/dashboard/css/dataTables.bootstrap4.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/dashboard/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/dashboard/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/coordinator-dashboard/app.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/coordinator-dashboard/app.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/coordinator-dashboard/edit_game.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/coordinator-dashboard/edit_game.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/coordinator-dashboard/game_create.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/coordinator-dashboard/game_create.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/coordinator-dashboard/view_game.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/coordinator-dashboard/view_game.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
